@@ -14,7 +14,7 @@ import java.util.NavigableSet;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class GedFinder {
+public class EditPathFinder {
 	
 	
 	public static EditPath find(DecoratedGraph from, DecoratedGraph to, CostContainer costContainer) {

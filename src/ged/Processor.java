@@ -1,7 +1,7 @@
 package ged;
 
 import ged.editpath.EditPath;
-import ged.editpath.GedFinder;
+import ged.editpath.EditPathFinder;
 import ged.graph.DecoratedGraph;
 import ged.graph.DotParseException;
 import ged.graph.GraphConverter;
@@ -23,7 +23,7 @@ public class Processor {
 			throw new DotParseException("Can't compare directed and undirected graphs!");
 		}
 		
-		EditPath editPath = GedFinder.find(first, second, inputContainer.getCostContainer());
+		EditPath editPath = EditPathFinder.find(first, second, inputContainer.getCostContainer());
 		
 		Graph graph = GraphConverter.combine(editPath);
 				
