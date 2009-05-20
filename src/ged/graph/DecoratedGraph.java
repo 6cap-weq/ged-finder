@@ -36,9 +36,9 @@ public class DecoratedGraph {
 	public DecoratedNode getNextNode(Collection<DecoratedNode> nodes) {
 		if(nodes != null) {
 			for(DecoratedNode fromNode : nodes) {
-				for(DecoratedNode adjucent : fromNode.getAdjacent()) {
-					if(!nodes.contains(adjucent)) {
-						return adjucent;
+				for(DecoratedNode adjacent : fromNode.getAdjacent()) {
+					if(!nodes.contains(adjacent)) {
+						return adjacent;
 					}
 				}
 			}
