@@ -72,24 +72,34 @@ public class GraphConverter {
 			while(grappaEdges.hasMoreElements()) {
 				Edge grappaEdge = grappaEdges.nextElement();
 				
-				Node adjucentGrappaNode;
+				Node adjacentGrappaNode;
 				
 				if(grappaGraph.isDirected()) {
-					adjucentGrappaNode = grappaEdge.getTail();
+					adjacentGrappaNode = grappaEdge.getTail();
 				} else {				
 					Node head = grappaEdge.getHead();
 					Node tail = grappaEdge.getTail();
 				
-					adjucentGrappaNode = head.equals(grappaNode) ? tail : head;
+					adjacentGrappaNode = head.equals(grappaNode) ? tail : head;
 				}
 				
-				node.addAdjacent(nodeMapping.get(adjucentGrappaNode));
+				node.addAdjacent(nodeMapping.get(adjacentGrappaNode));
+			}
+			
+			if(grappaGraph.isDirected()) {
+				Enumeration<Edge> grappaInEdges = grappaNode.inEdgeElements();
+				
+				while(grappaInEdges.hasMoreElements()) {
+					Edge grappaInEdge = grappaInEdges.nextElement();
+					
+					Node adjacentGrappaNode = grappaInEdge.getHead();
+					
+					node.addAccessedBy(nodeMapping.get(adjacentGrappaNode));
+				}
 			}
 		}
 		
-		DecoratedGraph graph = new DecoratedGraph(grappaGraph.getName(), nodes, grappaGraph);
-		
-		return graph;
+		return new DecoratedGraph(grappaGraph.getName(), nodes, grappaGraph);
 	}
 	
 	

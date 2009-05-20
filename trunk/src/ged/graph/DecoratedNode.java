@@ -13,7 +13,9 @@ public class DecoratedNode {
 
 	private String label;
 	
-	private Set<DecoratedNode> adjacent = new HashSet<DecoratedNode>();
+	private final Set<DecoratedNode> adjacent = new HashSet<DecoratedNode>();
+	
+	private final Set<DecoratedNode> accessedBy = new HashSet<DecoratedNode>();
 	
 	private Node grappaNode;
 	
@@ -37,10 +39,22 @@ public class DecoratedNode {
 		adjacent.add(node);
 	}
 	
-	
-	public boolean isAdjucent(DecoratedNode node) {
+	public boolean isAdjacent(DecoratedNode node) {
 		return adjacent.contains(node);
 	}
+	
+	
+	public Set<DecoratedNode> getAccessedBy() {
+		return accessedBy;
+	}
+	
+	public void addAccessedBy(DecoratedNode node) {
+		accessedBy.add(node);
+	}
+	
+	public boolean isAccessedBy(DecoratedNode node) {
+		return accessedBy.contains(node);
+	}	
 
 	
 	public Node getGrappaNode() {
