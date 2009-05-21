@@ -53,18 +53,9 @@ public class EditPathFinder {
 			open.add(substitutionEditPath);
 		}
 		
-		NodeEditPath deletionNodeEditPath = new NodeEditPath();
-		
-		deletionNodeEditPath.setFrom(firstNode);
-		
-		EditOperation deletion = new NodeDeletion(firstNode, costContainer);
-		deletionNodeEditPath.addEditOperation(deletion);
-		
 		EditPath deletionEditPath = new EditPath(from, to);
-		deletionEditPath.addNodeEditPath(deletionNodeEditPath);
-		open.add(deletionEditPath);
-	}
-	
+		processNodeDeletion(from, to, firstNode, deletionEditPath, costContainer, open);
+	}	
 	
 
 	private static void process(DecoratedGraph from, DecoratedGraph to, EditPath minimumCostPath,
@@ -138,34 +129,73 @@ public class EditPathFinder {
 				substitutionEditPath.addNodeEditPath(substitutionNodeEditPath);
 				open.add(substitutionEditPath);
 			}
-						
-			NodeEditPath deletionNodeEditPath = new NodeEditPath();
 			
-			deletionNodeEditPath.setFrom(nextFromNode);
-			
-			EditOperation deletion = new NodeDeletion(nextFromNode, costContainer);
-			deletionNodeEditPath.addEditOperation(deletion);
-			
-			EditPath deletionEditPath = minimumCostPath.copy();
-			deletionEditPath.addNodeEditPath(deletionNodeEditPath);
-			open.add(deletionEditPath);
+			processNodeDeletion(from, to, nextFromNode, minimumCostPath.copy(), costContainer, open);
 		} else {
-			EditPath insertionPath = minimumCostPath.copy();
+			processNodeInsertion(from, minimumCostPath, unmappedToNodes, costContainer, open);
+		}
+	}
+
+	
+	private static void processNodeDeletion(DecoratedGraph from, DecoratedGraph to, 
+			DecoratedNode node, EditPath deletionEditPath,
+			CostContainer costContainer, NavigableSet<EditPath> open) {
+		
+		NodeEditPath deletionNodeEditPath = new NodeEditPath();
+		
+		deletionNodeEditPath.setFrom(node);
+		
+		EditOperation deletion = new NodeDeletion(node, costContainer);
+		deletionNodeEditPath.addEditOperation(deletion);
+		
+		for(DecoratedNode adjucentNode : node.getAdjacent()) {
+			EditOperation edgeDeletion = new EdgeDeletion(node, adjucentNode, costContainer);
+			deletionNodeEditPath.addEditOperation(edgeDeletion);
+		}
+		
+		if(from.isDirected()) {
+			for(DecoratedNode accessedByNode : node.getAccessedBy()) {
+				EditOperation edgeDeletion = new EdgeDeletion(accessedByNode, node, costContainer);
+				deletionNodeEditPath.addEditOperation(edgeDeletion);
+			}
+		}
+		
+		deletionEditPath.addNodeEditPath(deletionNodeEditPath);
+		open.add(deletionEditPath);
+	}
+	
+	
+	private static void processNodeInsertion(DecoratedGraph from, EditPath editPath,
+			Set<DecoratedNode> unmappedToNodes, CostContainer costContainer, 
+			NavigableSet<EditPath> open) {
+		
+		EditPath insertionPath = editPath.copy();
+		
+		for(DecoratedNode unmappedToNode : unmappedToNodes) {
+			NodeEditPath insertionNodeEditPath = new NodeEditPath();
 			
-			for(DecoratedNode unmappedToNode : unmappedToNodes) {
-				NodeEditPath insertionNodeEditPath = new NodeEditPath();
-				
-				insertionNodeEditPath.setTo(unmappedToNode);
-				
-				EditOperation insertion = new NodeInsertion(unmappedToNode, costContainer);
-				insertionNodeEditPath.addEditOperation(insertion);
-				
-				insertionPath.addNodeEditPath(insertionNodeEditPath);
+			insertionNodeEditPath.setTo(unmappedToNode);
+			
+			EditOperation insertion = new NodeInsertion(unmappedToNode, costContainer);
+			insertionNodeEditPath.addEditOperation(insertion);
+			
+			insertionPath.addNodeEditPath(insertionNodeEditPath);
+			
+			for(DecoratedNode adjucentNode : unmappedToNode.getAdjacent()) {
+				EditOperation edgeInsertion = new EdgeInsertion(unmappedToNode, adjucentNode, costContainer);
+				insertionNodeEditPath.addEditOperation(edgeInsertion);
 			}
 			
-			insertionPath.setComplete(true);
-			open.add(insertionPath);
+			if(from.isDirected()) {
+				for(DecoratedNode accessedByNode : unmappedToNode.getAccessedBy()) {
+					EditOperation edgeInsertion = new EdgeInsertion(accessedByNode, unmappedToNode, costContainer);
+					insertionNodeEditPath.addEditOperation(edgeInsertion);
+				}
+			}
 		}
+		
+		insertionPath.setComplete(true);
+		open.add(insertionPath);
 	}
 	
 }
