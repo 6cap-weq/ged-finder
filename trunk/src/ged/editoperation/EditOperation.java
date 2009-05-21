@@ -13,7 +13,7 @@ public abstract class EditOperation {
 
 
 	public BigDecimal getCost() {
-		return doGetCost(costContainer);
+		return doGetCost(costContainer).setScale(2);
 	}
 
 

@@ -27,8 +27,7 @@ public class StringEditDistance {
 		
 		double editDistance = StringUtils.getLevenshteinDistance(a, b);
 		
-		return BigDecimal.valueOf(editDistance).
-				divide(BigDecimal.valueOf(b.length()).setScale(2), 
-					2, RoundingMode.HALF_EVEN);
+		return BigDecimal.valueOf(editDistance).divide(
+				BigDecimal.valueOf(b.length()), 2, RoundingMode.HALF_EVEN);
 	}
 }
