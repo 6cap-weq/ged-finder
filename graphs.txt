@@ -1,119 +1,19 @@
-graph from {
-     a -- b;
-     b -- c;
- }
-
-graph from {
-     a -- b;
-     b -- c;
-     a -- c;
- }
- 
- 
- 
- digraph from {
-     a -> a;
- }
- 
- digraph to {
-     a -> b;
-     b -> b;
- }
- 
- 
- 
-
 digraph from {
-     a -> a;
-     a -> b;
-     b -> c;
-     b -> d;
- }
+	a1 -> a1;
+	a1 -> b1;
+	a1 -> c1;
+	b1 -> c1;
+	c1 -> d1;
+	d1 -> a1;
+}
 
 digraph to {
-     a -> b;
-     b -> b;
-     b -> d;
- }
- 
- 
- 
- 
- digraph from {
-     a -> b;
-     b -> c;
-     b -> d;
- }
- 
-  digraph to {
-     a -> b;
-     b -> d;
-     d -> e;
- }
- 
- 
- 
-  digraph from {
-     a1 -> b;
-     b -> c;
-     b -> d;
- }
- 
- digraph to {
-     a -> b2;
-     b2 -> d;
-     d -> e;
-     e -> f;
- }
- 
-
- 
- digraph TrafficLights {
-node [shape=box];  gy2; yr2; rg2; gy1; yr1; rg1;
-node [shape=circle,fixedsize=true];  
-green2; yellow2; red2; safe2; safe1; green1; yellow1; red1;
-gy2->yellow2;
-rg2->green2;
-yr2->safe1;
-yr2->red2;
-safe2->rg2;
-green2->gy2;
-yellow2->yr2;
-red2->rg2;
-gy1->yellow1;
-rg1->green1;
-yr1->safe2;
-yr1->red1;
-safe1->rg1;
-green1->gy1;
-yellow1->yr1;
-red1->rg1;
-
-overlap=false
-label="PetriNet Model TrafficLights\nExtracted from ConceptBase and layed out by Graphviz"
-fontsize=12;
+	a1 -> b2;
+	a1 -> d2;
+	b2 -> c2;
+	c2 -> a1;
+	d2 -> e1;
+	e1 -> b2;
 }
- 
- 
- 
- digraph finite_state_machine {
-	rankdir=LR;
-	size="8,5"
-	node [shape = doublecircle]; LR_0 LR_3 LR_4 LR_8;
-	node [shape = circle];
-	LR_0 -> LR_2 [ label = "SS(B)" ];
-	LR_0 -> LR_1 [ label = "SS(S)" ];
-	LR_1 -> LR_3 [ label = "S($end)" ];
-	LR_2 -> LR_6 [ label = "SS(b)" ];
-	LR_2 -> LR_5 [ label = "SS(a)" ];
-	LR_2 -> LR_4 [ label = "S(A)" ];
-	LR_5 -> LR_7 [ label = "S(b)" ];
-	LR_5 -> LR_5 [ label = "S(a)" ];
-	LR_6 -> LR_6 [ label = "S(b)" ];
-	LR_6 -> LR_5 [ label = "S(a)" ];
-	LR_7 -> LR_8 [ label = "S(b)" ];
-	LR_7 -> LR_5 [ label = "S(a)" ];
-	LR_8 -> LR_6 [ label = "S(b)" ];
-	LR_8 -> LR_5 [ label = "S(a)" ];
-}
- 
+
+==================================
