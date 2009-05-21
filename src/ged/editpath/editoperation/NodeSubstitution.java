@@ -5,6 +5,11 @@ import ged.processor.StringEditDistance;
 
 import java.math.BigDecimal;
 
+/**
+ * Node substitution edit operation.
+ * 
+ * @author Roman Tekhov
+ */
 public class NodeSubstitution extends EditOperation {
 	
 	private DecoratedNode from;
@@ -40,6 +45,11 @@ public class NodeSubstitution extends EditOperation {
 	
 	@Override
 	protected BigDecimal doGetCost(CostContainer costContainer) {
+		/*
+		 * Node substitution cost is calculated by computing the 
+		 * similarity coefficient of node labels and multiplying it
+		 * with the maximum predefined cost.
+		 */		
 		BigDecimal coefficient = StringEditDistance.calculateCoefficient(from.getLabel(), to.getLabel());
 		
 		return costContainer.getNodeSubstitutionCost().multiply(coefficient);

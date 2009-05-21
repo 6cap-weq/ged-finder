@@ -4,6 +4,11 @@ import ged.graph.DecoratedNode;
 
 import java.math.BigDecimal;
 
+/**
+ * Node insertion edit operation.
+ * 
+ * @author Roman Tekhov
+ */
 public class NodeInsertion extends EditOperation {
 	
 	private DecoratedNode insertedNode;
