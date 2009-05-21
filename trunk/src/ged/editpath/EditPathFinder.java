@@ -117,7 +117,7 @@ public class EditPathFinder {
 					adjacentTo = adjacentFrom;
 				}
 								
-				if(!unmappedToNode.isAdjacent(adjacentTo)) {
+				if(adjacentTo != null && !unmappedToNode.isAdjacent(adjacentTo)) {
 					EditOperation edgeDeletion = new EdgeDeletion(fromNode, adjacentFrom, costContainer);
 					substitutionNodeEditPath.addEditOperation(edgeDeletion);
 				}
@@ -134,7 +134,7 @@ public class EditPathFinder {
 					adjacentFrom = adjacentTo;
 				}
 								
-				if(!fromNode.isAdjacent(adjacentFrom)) {
+				if(adjacentFrom != null && !fromNode.isAdjacent(adjacentFrom)) {
 					EditOperation edgeInsertion = new EdgeInsertion(unmappedToNode, adjacentTo, costContainer);
 					substitutionNodeEditPath.addEditOperation(edgeInsertion);
 				}
