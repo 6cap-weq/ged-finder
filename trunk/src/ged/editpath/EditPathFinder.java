@@ -48,6 +48,17 @@ public class EditPathFinder {
 			EditOperation substitution = new NodeSubstitution(firstNode, toNode, costContainer);
 			substitutionNodeEditPath.addEditOperation(substitution);
 			
+			boolean firstNodeSelfAdjacent = firstNode.isAdjacent(firstNode);
+			boolean toNodeSelfAdjacent = toNode.isAdjacent(toNode);
+			
+			if(firstNodeSelfAdjacent && !toNodeSelfAdjacent) {
+				EditOperation edgeDeletion = new EdgeDeletion(firstNode, firstNode, costContainer);
+				substitutionNodeEditPath.addEditOperation(edgeDeletion);
+			} else if(!firstNodeSelfAdjacent && toNodeSelfAdjacent) {
+				EditOperation edgeInsertion = new EdgeInsertion(toNode, toNode, costContainer);
+				substitutionNodeEditPath.addEditOperation(edgeInsertion);
+			}
+			
 			EditPath substitutionEditPath = new EditPath(from, to);
 			substitutionEditPath.addNodeEditPath(substitutionNodeEditPath);
 			open.add(substitutionEditPath);
@@ -107,8 +118,8 @@ public class EditPathFinder {
 				}
 								
 				if(!unmappedToNode.isAdjacent(adjacentTo)) {
-					EditOperation selfEdgeDeletion = new EdgeDeletion(fromNode, adjacentFrom, costContainer);
-					substitutionNodeEditPath.addEditOperation(selfEdgeDeletion);
+					EditOperation edgeDeletion = new EdgeDeletion(fromNode, adjacentFrom, costContainer);
+					substitutionNodeEditPath.addEditOperation(edgeDeletion);
 				}
 			}
 			
