@@ -1,9 +1,9 @@
 package ged.gui;
 
-import ged.InputContainer;
-import ged.OutputContainer;
-import ged.Processor;
 import ged.graph.DotParseException;
+import ged.processor.InputContainer;
+import ged.processor.OutputContainer;
+import ged.processor.Processor;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;

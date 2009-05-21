@@ -1,4 +1,4 @@
-package ged;
+package ged.processor;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

@@ -1,6 +1,7 @@
 package ged;
 
 import ged.gui.GUICreator;
+import ged.processor.Processor;
 
 public class Start {
 	
