@@ -1,17 +1,18 @@
 digraph from {
-	a1 -> a1;
-	a1 -> b1;
-	a1 -> c1;
+	a -> a;
+	a -> b1;
+	a -> c1;
 	b1 -> c1;
 	c1 -> d1;
-	d1 -> a1;
+	d1 -> a;
+	f -> b1;
 }
 
 digraph to {
-	a1 -> b2;
-	a1 -> d2;
+	a -> b2;
+	a -> d2;
 	b2 -> c2;
-	c2 -> a1;
+	c2 -> a;
 	d2 -> e1;
 	e1 -> b2;
 }

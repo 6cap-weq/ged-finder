@@ -1,7 +1,8 @@
 package ged.graph;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import att.grappa.Graph;
@@ -54,8 +55,8 @@ public class DecoratedGraph {
 	}
 	
 	
-	public Set<DecoratedNode> getRestNodes(Collection<DecoratedNode> nodes) {
-		Set<DecoratedNode> restNodes = new HashSet<DecoratedNode>();
+	public List<DecoratedNode> getRestNodes(Collection<DecoratedNode> nodes) {
+		List<DecoratedNode> restNodes = new ArrayList<DecoratedNode>();
 		
 		for(DecoratedNode node : this.nodes) {
 			if(!nodes.contains(node)) {
