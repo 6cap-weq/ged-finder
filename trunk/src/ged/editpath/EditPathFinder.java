@@ -81,7 +81,7 @@ public class EditPathFinder {
 	private static void processNodeSubstitution(DecoratedGraph from,
 			EditPath editPath, Set<DecoratedNode> mappedFromNodes,
 			Set<DecoratedNode> mappedToNodes, Set<DecoratedNode> unmappedToNodes, 
-			DecoratedNode node, CostContainer costContainer, 
+			DecoratedNode fromNode, CostContainer costContainer, 
 			NavigableSet<EditPath> open) {
 		
 		for(DecoratedNode unmappedToNode : unmappedToNodes) {
@@ -89,41 +89,53 @@ public class EditPathFinder {
 			
 			NodeEditPath substitutionNodeEditPath = new NodeEditPath();
 			
-			substitutionNodeEditPath.setFrom(node);
+			substitutionNodeEditPath.setFrom(fromNode);
 			substitutionNodeEditPath.setTo(unmappedToNode);
 			
-			EditOperation substitution = new NodeSubstitution(node, unmappedToNode, costContainer);
+			EditOperation substitution = new NodeSubstitution(fromNode, unmappedToNode, costContainer);
 			substitutionNodeEditPath.addEditOperation(substitution);
 			
-			for(DecoratedNode adjacentFrom : node.getAdjacent()) {
-				if(mappedFromNodes.contains(adjacentFrom)) {
-					DecoratedNode adjacentTo = substitutionEditPath.getMapped(adjacentFrom);
-					
-					if(!unmappedToNode.isAdjacent(adjacentTo)) {
-						EditOperation edgeDeletion = new EdgeDeletion(node, adjacentFrom, costContainer);
-						substitutionNodeEditPath.addEditOperation(edgeDeletion);
+			for(DecoratedNode adjacentFrom : fromNode.getAdjacent()) {
+				DecoratedNode adjacentTo = null;
+				
+				if(!adjacentFrom.equals(fromNode)) {
+					if(mappedFromNodes.contains(adjacentFrom)) {
+						adjacentTo = substitutionEditPath.getMapped(adjacentFrom);
 					}
+				} else {
+					adjacentTo = adjacentFrom;
+				}
+								
+				if(!unmappedToNode.isAdjacent(adjacentTo)) {
+					EditOperation selfEdgeDeletion = new EdgeDeletion(fromNode, adjacentFrom, costContainer);
+					substitutionNodeEditPath.addEditOperation(selfEdgeDeletion);
 				}
 			}
 			
 			for(DecoratedNode adjacentTo : unmappedToNode.getAdjacent()) {
-				if(mappedToNodes.contains(adjacentTo)) {
-					DecoratedNode adjacentFrom = substitutionEditPath.getMappedReverse(adjacentTo);
-					
-					if(!node.isAdjacent(adjacentFrom)) {
-						EditOperation edgeInsertion = new EdgeInsertion(unmappedToNode, adjacentTo, costContainer);
-						substitutionNodeEditPath.addEditOperation(edgeInsertion);
+				DecoratedNode adjacentFrom = null;
+				
+				if(!adjacentTo.equals(unmappedToNode)) {
+					if(mappedToNodes.contains(adjacentTo)) {
+						adjacentFrom = substitutionEditPath.getMappedReverse(adjacentTo);
 					}
+				} else {
+					adjacentFrom = adjacentTo;
+				}
+								
+				if(!fromNode.isAdjacent(adjacentFrom)) {
+					EditOperation edgeInsertion = new EdgeInsertion(unmappedToNode, adjacentTo, costContainer);
+					substitutionNodeEditPath.addEditOperation(edgeInsertion);
 				}
 			}
 			
 			if(from.isDirected()) {
-				for(DecoratedNode accessedByFrom : node.getAccessedBy()) {
+				for(DecoratedNode accessedByFrom : fromNode.getAccessedBy()) {
 					if(mappedFromNodes.contains(accessedByFrom)) {
 						DecoratedNode accessedByTo = substitutionEditPath.getMapped(accessedByFrom);
 						
 						if(!unmappedToNode.isAccessedBy(accessedByTo)) {
-							EditOperation edgeDeletion = new EdgeDeletion(accessedByFrom, node, costContainer);
+							EditOperation edgeDeletion = new EdgeDeletion(accessedByFrom, fromNode, costContainer);
 							substitutionNodeEditPath.addEditOperation(edgeDeletion);
 						}
 					}
@@ -133,7 +145,7 @@ public class EditPathFinder {
 					if(mappedToNodes.contains(accessedByTo)) {
 						DecoratedNode accessedByFrom = substitutionEditPath.getMappedReverse(accessedByTo);
 						
-						if(!node.isAccessedBy(accessedByFrom)) {
+						if(!fromNode.isAccessedBy(accessedByFrom)) {
 							EditOperation edgeInsertion = new EdgeInsertion(accessedByTo, unmappedToNode, costContainer);
 							substitutionNodeEditPath.addEditOperation(edgeInsertion);
 						}
