@@ -41,10 +41,10 @@ public class EditPath implements Comparable<EditPath> {
 	
 	public BigDecimal getCost() {
 		if(cost == null) {
-			cost = new BigDecimal("0.0");
+			cost = new BigDecimal("0.00");
 			
 			for(NodeEditPath nodeEditPath : nodeEditPaths) {
-				cost = cost.add(nodeEditPath.getCost());
+				cost = cost.add(nodeEditPath.getCost()).setScale(2);
 			}
 		}
 		

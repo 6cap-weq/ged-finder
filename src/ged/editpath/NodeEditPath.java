@@ -50,10 +50,10 @@ public class NodeEditPath {
 	
 	public BigDecimal getCost() {
 		if(cost == null) {
-			cost = new BigDecimal("0.0");;
+			cost = new BigDecimal("0.00");
 			
 			for(EditOperation editOperation : editOperations) {
-				cost = cost.add(editOperation.getCost());
+				cost = cost.add(editOperation.getCost()).setScale(2);
 			}
 		}
 		

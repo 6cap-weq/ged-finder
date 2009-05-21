@@ -99,23 +99,23 @@ class CostPanel extends JPanel {
 		CostContainer costContainer = new CostContainer();
 		
 		if(nodeInsertionCost != null) {
-			costContainer.setNodeInsertionCost(BigDecimal.valueOf(nodeInsertionCost.doubleValue()));
+			costContainer.setNodeInsertionCost(BigDecimal.valueOf(nodeInsertionCost.doubleValue()).setScale(2));
 		}
 		
 		if(edgeInsertionCost != null) {
-			costContainer.setEdgeInsertionCost(BigDecimal.valueOf(edgeInsertionCost.doubleValue()));
+			costContainer.setEdgeInsertionCost(BigDecimal.valueOf(edgeInsertionCost.doubleValue()).setScale(2));
 		}
 		
 		if(nodeDeletionCost != null) {
-			costContainer.setNodeDeletionCost(BigDecimal.valueOf(nodeDeletionCost.doubleValue()));
+			costContainer.setNodeDeletionCost(BigDecimal.valueOf(nodeDeletionCost.doubleValue()).setScale(2));
 		}
 		
 		if(edgeDeletionCost != null) {
-			costContainer.setEdgeDeletionCost(BigDecimal.valueOf(edgeDeletionCost.doubleValue()));
+			costContainer.setEdgeDeletionCost(BigDecimal.valueOf(edgeDeletionCost.doubleValue()).setScale(2));
 		}
 		
 		if(nodeSubstitutionCost != null) {
-			costContainer.setNodeSubstitutionCost(BigDecimal.valueOf(nodeSubstitutionCost.doubleValue()));
+			costContainer.setNodeSubstitutionCost(BigDecimal.valueOf(nodeSubstitutionCost.doubleValue()).setScale(2));
 		}
 		
 		return costContainer;

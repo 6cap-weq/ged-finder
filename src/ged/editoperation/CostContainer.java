@@ -8,7 +8,7 @@ import java.math.BigDecimal;
  */
 public class CostContainer {
 	
-	private static final BigDecimal DEFAULT_COST = new BigDecimal("1.0");
+	private static final BigDecimal DEFAULT_COST = new BigDecimal("1.00").setScale(2);
 	
 	private BigDecimal edgeDeletionCost = DEFAULT_COST;
 	private BigDecimal edgeInsertionCost = DEFAULT_COST;
