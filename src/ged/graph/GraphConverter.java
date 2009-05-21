@@ -72,17 +72,11 @@ public class GraphConverter {
 			while(grappaEdges.hasMoreElements()) {
 				Edge grappaEdge = grappaEdges.nextElement();
 				
-				Node adjacentGrappaNode;
+				Node head = grappaEdge.getHead();
+				Node tail = grappaEdge.getTail();
 				
-				if(grappaGraph.isDirected()) {
-					adjacentGrappaNode = grappaEdge.getTail();
-				} else {				
-					Node head = grappaEdge.getHead();
-					Node tail = grappaEdge.getTail();
-				
-					adjacentGrappaNode = head.equals(grappaNode) ? tail : head;
-				}
-				
+				Node adjacentGrappaNode = head.equals(grappaNode) ? tail : head;
+								
 				node.addAdjacent(nodeMapping.get(adjacentGrappaNode));
 			}
 			
@@ -92,7 +86,10 @@ public class GraphConverter {
 				while(grappaInEdges.hasMoreElements()) {
 					Edge grappaInEdge = grappaInEdges.nextElement();
 					
-					Node adjacentGrappaNode = grappaInEdge.getHead();
+					Node head = grappaInEdge.getHead();
+					Node tail = grappaInEdge.getTail();
+					
+					Node adjacentGrappaNode = head.equals(grappaNode) ? tail : head;
 					
 					node.addAccessedBy(nodeMapping.get(adjacentGrappaNode));
 				}

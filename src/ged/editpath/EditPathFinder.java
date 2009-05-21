@@ -10,20 +10,20 @@ import ged.editoperation.NodeSubstitution;
 import ged.graph.DecoratedGraph;
 import ged.graph.DecoratedNode;
 
-import java.util.NavigableSet;
+import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.Set;
-import java.util.TreeSet;
 
 public class EditPathFinder {
 	
 	
 	public static EditPath find(DecoratedGraph from, DecoratedGraph to, CostContainer costContainer) {
-		NavigableSet<EditPath> open = new TreeSet<EditPath>();
+		Queue<EditPath> open = new PriorityQueue<EditPath>();
 		
 		init(from, to, open, costContainer);
 		
 		while(true) {
-			EditPath minimumCostPath = open.pollFirst();
+			EditPath minimumCostPath = open.poll();
 			
 			if(minimumCostPath.isComplete()) {
 				return minimumCostPath;
@@ -36,7 +36,7 @@ public class EditPathFinder {
 	
 
 	private static void init(DecoratedGraph from, DecoratedGraph to, 
-			NavigableSet<EditPath> open, CostContainer costContainer) {
+			Queue<EditPath> open, CostContainer costContainer) {
 		
 		DecoratedNode firstNode = from.getNextNode(null);
 		for(DecoratedNode toNode : to.getNodes()) {			
@@ -61,7 +61,7 @@ public class EditPathFinder {
 			
 			EditPath substitutionEditPath = new EditPath(from, to);
 			substitutionEditPath.addNodeEditPath(substitutionNodeEditPath);
-			open.add(substitutionEditPath);
+			open.offer(substitutionEditPath);
 		}
 		
 		EditPath deletionEditPath = new EditPath(from, to);
@@ -70,7 +70,7 @@ public class EditPathFinder {
 	
 
 	private static void process(DecoratedGraph from, DecoratedGraph to, EditPath minimumCostPath,
-			NavigableSet<EditPath> open, CostContainer costContainer) {
+			Queue<EditPath> open, CostContainer costContainer) {
 	
 		Set<DecoratedNode> mappedFromNodes = minimumCostPath.getMappedFromNodes();
 		Set<DecoratedNode> mappedToNodes = minimumCostPath.getMappedToNodes();
@@ -93,7 +93,7 @@ public class EditPathFinder {
 			EditPath editPath, Set<DecoratedNode> mappedFromNodes,
 			Set<DecoratedNode> mappedToNodes, Set<DecoratedNode> unmappedToNodes, 
 			DecoratedNode fromNode, CostContainer costContainer, 
-			NavigableSet<EditPath> open) {
+			Queue<EditPath> open) {
 		
 		for(DecoratedNode unmappedToNode : unmappedToNodes) {
 			EditPath substitutionEditPath = editPath.copy();
@@ -165,14 +165,14 @@ public class EditPathFinder {
 			}
 							
 			substitutionEditPath.addNodeEditPath(substitutionNodeEditPath);
-			open.add(substitutionEditPath);
+			open.offer(substitutionEditPath);
 		}
 	}
 
 	
 	private static void processNodeDeletion(DecoratedGraph from, DecoratedGraph to, 
 			DecoratedNode node, EditPath deletionEditPath,
-			CostContainer costContainer, NavigableSet<EditPath> open) {
+			CostContainer costContainer, Queue<EditPath> open) {
 		
 		NodeEditPath deletionNodeEditPath = new NodeEditPath();
 		
@@ -194,13 +194,13 @@ public class EditPathFinder {
 		}
 		
 		deletionEditPath.addNodeEditPath(deletionNodeEditPath);
-		open.add(deletionEditPath);
+		open.offer(deletionEditPath);
 	}
 	
 	
 	private static void processNodeInsertion(DecoratedGraph from, EditPath editPath,
 			Set<DecoratedNode> unmappedToNodes, CostContainer costContainer, 
-			NavigableSet<EditPath> open) {
+			Queue<EditPath> open) {
 		
 		EditPath insertionPath = editPath.copy();
 		
@@ -228,7 +228,7 @@ public class EditPathFinder {
 		}
 		
 		insertionPath.setComplete(true);
-		open.add(insertionPath);
+		open.offer(insertionPath);
 	}
 
 }

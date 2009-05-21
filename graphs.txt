@@ -11,6 +11,17 @@ graph from {
  
  
  
+ digraph from {
+     a -> a;
+ }
+ 
+ digraph from {
+     a -> b;
+     b -> b;
+ }
+ 
+ 
+ 
 
 digraph from {
      a -> a;
