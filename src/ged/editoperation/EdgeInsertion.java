@@ -2,12 +2,12 @@ package ged.editoperation;
 
 import ged.graph.DecoratedNode;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EdgeInsertion extends EditOperation {
 	
-	private final Set<DecoratedNode> insertedEdgeNodes = new HashSet<DecoratedNode>(2);
+	private final List<DecoratedNode> insertedEdgeNodes = new ArrayList<DecoratedNode>(2);
 	
 	
 	public EdgeInsertion(DecoratedNode first, DecoratedNode second, 
@@ -19,7 +19,7 @@ public class EdgeInsertion extends EditOperation {
 	}
 
 	
-	public Set<DecoratedNode> getAddedEdgeNodes() {
+	public List<DecoratedNode> getAddedEdgeNodes() {
 		return insertedEdgeNodes;
 	}
 

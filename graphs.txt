@@ -12,16 +12,17 @@ graph from {
  
  
 
-graph from {
-     a -- b;
-     b -- c;
-     b -- d;
+digraph from {
+     a -> a;
+     a -> b;
+     b -> c;
+     b -> d;
  }
 
- graph to {
-     a -- b;
-     b -- d;
-     d -- e;
+digraph to {
+     a -> b;
+     b -> b;
+     b -> d;
  }
  
  

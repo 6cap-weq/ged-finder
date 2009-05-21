@@ -2,12 +2,12 @@ package ged.editoperation;
 
 import ged.graph.DecoratedNode;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EdgeDeletion extends EditOperation {
 	
-	private final Set<DecoratedNode> deletedEdgeNodes = new HashSet<DecoratedNode>(2);
+	private final List<DecoratedNode> deletedEdgeNodes = new ArrayList<DecoratedNode>(2);
 
 	
 	public EdgeDeletion(DecoratedNode first, DecoratedNode second, 
@@ -19,7 +19,7 @@ public class EdgeDeletion extends EditOperation {
 	}
 	
 		
-	public Set<DecoratedNode> getDeletedEdgeNodes() {
+	public List<DecoratedNode> getDeletedEdgeNodes() {
 		return deletedEdgeNodes;
 	}
 	
