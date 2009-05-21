@@ -15,7 +15,7 @@ graph from {
      a -> a;
  }
  
- digraph from {
+ digraph to {
      a -> b;
      b -> b;
  }

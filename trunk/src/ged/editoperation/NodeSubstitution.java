@@ -3,6 +3,8 @@ package ged.editoperation;
 import ged.StringEditDistance;
 import ged.graph.DecoratedNode;
 
+import java.math.BigDecimal;
+
 public class NodeSubstitution extends EditOperation {
 	
 	private DecoratedNode from;
@@ -37,10 +39,10 @@ public class NodeSubstitution extends EditOperation {
 	
 	
 	@Override
-	protected double doGetCost(CostContainer costContainer) {
-		double coefficient = StringEditDistance.calculateCoefficient(from.getLabel(), to.getLabel());
+	protected BigDecimal doGetCost(CostContainer costContainer) {
+		BigDecimal coefficient = StringEditDistance.calculateCoefficient(from.getLabel(), to.getLabel());
 		
-		return costContainer.getNodeSubstitutionCost() * coefficient;
+		return costContainer.getNodeSubstitutionCost().multiply(coefficient);
 	}
 	
 	

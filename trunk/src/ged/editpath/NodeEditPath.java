@@ -3,6 +3,7 @@ package ged.editpath;
 import ged.editoperation.EditOperation;
 import ged.graph.DecoratedNode;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +14,7 @@ public class NodeEditPath {
 	
 	private List<EditOperation> editOperations = new ArrayList<EditOperation>();
 	
-	private Double cost;
+	private BigDecimal cost;
 	
 	
 	public DecoratedNode getFrom() {
@@ -47,12 +48,12 @@ public class NodeEditPath {
 	}
 	
 	
-	public double getCost() {
+	public BigDecimal getCost() {
 		if(cost == null) {
-			cost = 0.0;
+			cost = new BigDecimal("0.0");;
 			
 			for(EditOperation editOperation : editOperations) {
-				cost += editOperation.getCost();
+				cost = cost.add(editOperation.getCost());
 			}
 		}
 		

@@ -7,6 +7,7 @@ import java.awt.Color;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -128,7 +129,7 @@ public class GraphConverter {
 		copyEdges(to, toSubgraph, nodeMap);
 		
 		for(NodeEditPath nodeEditPath : editPath.getNodeEditPaths()) {
-			double cost = nodeEditPath.getCost();
+			BigDecimal cost = nodeEditPath.getCost();
 			
 			DecoratedNode nodeFrom = nodeEditPath.getFrom();
 			DecoratedNode nodeTo = nodeEditPath.getTo();
@@ -223,7 +224,7 @@ public class GraphConverter {
 	}
 	
 	
-	private static void configureInsertedOrDeleted(Node node, Color color, double cost) {
+	private static void configureInsertedOrDeleted(Node node, Color color, BigDecimal cost) {
 		setNodeColor(node, color);
 		
 		node.setAttribute(Attribute.LABEL_ATTR, 

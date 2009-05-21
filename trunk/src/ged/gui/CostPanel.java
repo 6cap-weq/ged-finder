@@ -5,6 +5,7 @@ import ged.editoperation.CostContainer;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.math.BigDecimal;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFormattedTextField;
@@ -98,23 +99,23 @@ class CostPanel extends JPanel {
 		CostContainer costContainer = new CostContainer();
 		
 		if(nodeInsertionCost != null) {
-			costContainer.setNodeInsertionCost(nodeInsertionCost.doubleValue());
+			costContainer.setNodeInsertionCost(BigDecimal.valueOf(nodeInsertionCost.doubleValue()));
 		}
 		
 		if(edgeInsertionCost != null) {
-			costContainer.setEdgeInsertionCost(edgeInsertionCost.doubleValue());
+			costContainer.setEdgeInsertionCost(BigDecimal.valueOf(edgeInsertionCost.doubleValue()));
 		}
 		
 		if(nodeDeletionCost != null) {
-			costContainer.setNodeDeletionCost(nodeDeletionCost.doubleValue());
+			costContainer.setNodeDeletionCost(BigDecimal.valueOf(nodeDeletionCost.doubleValue()));
 		}
 		
 		if(edgeDeletionCost != null) {
-			costContainer.setEdgeDeletionCost(edgeDeletionCost.doubleValue());
+			costContainer.setEdgeDeletionCost(BigDecimal.valueOf(edgeDeletionCost.doubleValue()));
 		}
 		
 		if(nodeSubstitutionCost != null) {
-			costContainer.setNodeSubstitutionCost(nodeSubstitutionCost.doubleValue());
+			costContainer.setNodeSubstitutionCost(BigDecimal.valueOf(nodeSubstitutionCost.doubleValue()));
 		}
 		
 		return costContainer;

@@ -2,6 +2,7 @@ package ged.editoperation;
 
 import ged.graph.DecoratedNode;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class EdgeDeletion extends EditOperation {
 	
 	
 	@Override
-	protected double doGetCost(CostContainer costContainer) {
+	protected BigDecimal doGetCost(CostContainer costContainer) {
 		return costContainer.getEdgeDeletionCost();
 	}
 	

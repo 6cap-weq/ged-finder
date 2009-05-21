@@ -1,5 +1,8 @@
 package ged;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 import org.apache.commons.lang.StringUtils;
 
 /**
@@ -10,7 +13,7 @@ import org.apache.commons.lang.StringUtils;
 public class StringEditDistance {
 	
 	
-	public static double calculateCoefficient(String str1, String str2) {
+	public static BigDecimal calculateCoefficient(String str1, String str2) {
 		String a, b;
 		
 		// determine the shorter string
@@ -24,6 +27,8 @@ public class StringEditDistance {
 		
 		double editDistance = StringUtils.getLevenshteinDistance(a, b);
 		
-		return editDistance / ((double)b.length());
+		return BigDecimal.valueOf(editDistance).
+				divide(BigDecimal.valueOf(b.length()).setScale(2), 
+					2, RoundingMode.HALF_EVEN);
 	}
 }

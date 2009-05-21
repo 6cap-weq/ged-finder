@@ -2,6 +2,8 @@ package ged.editoperation;
 
 import ged.graph.DecoratedNode;
 
+import java.math.BigDecimal;
+
 public class NodeInsertion extends EditOperation {
 	
 	private DecoratedNode insertedNode;
@@ -24,7 +26,7 @@ public class NodeInsertion extends EditOperation {
 
 
 	@Override
-	protected double doGetCost(CostContainer costContainer) {
+	protected BigDecimal doGetCost(CostContainer costContainer) {
 		return costContainer.getNodeInsertionCost();
 	}
 	
