@@ -1,4 +1,4 @@
-package ged;
+package ged.processor;
 
 import ged.editpath.editoperation.CostContainer;
 

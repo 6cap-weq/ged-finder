@@ -1,6 +1,6 @@
 package ged.gui;
 
-import ged.Processor;
+import ged.processor.Processor;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;

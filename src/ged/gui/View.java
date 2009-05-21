@@ -1,7 +1,7 @@
 package ged.gui;
 
-import ged.InputContainer;
 import ged.editpath.EditPath;
+import ged.processor.InputContainer;
 import att.grappa.Graph;
 
 public interface View {
