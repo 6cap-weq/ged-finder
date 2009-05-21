@@ -10,9 +10,10 @@ import ged.editpath.editoperation.NodeSubstitution;
 import ged.graph.DecoratedGraph;
 import ged.graph.DecoratedNode;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
-import java.util.Set;
 
 public class EditPathFinder {
 	
@@ -72,9 +73,9 @@ public class EditPathFinder {
 	private static void process(DecoratedGraph from, DecoratedGraph to, EditPath minimumCostPath,
 			Queue<EditPath> open, CostContainer costContainer) {
 	
-		Set<DecoratedNode> mappedFromNodes = minimumCostPath.getMappedFromNodes();
-		Set<DecoratedNode> mappedToNodes = minimumCostPath.getMappedToNodes();
-		Set<DecoratedNode> unmappedToNodes = to.getRestNodes(mappedToNodes);
+		List<DecoratedNode> mappedFromNodes = minimumCostPath.getMappedFromNodes();
+		List<DecoratedNode> mappedToNodes = minimumCostPath.getMappedToNodes();
+		List<DecoratedNode> unmappedToNodes = to.getRestNodes(mappedToNodes);
 		
 		if(mappedFromNodes.size() < from.getNodeNumber()) {
 			DecoratedNode nextFromNode = from.getNextNode(mappedFromNodes);
@@ -90,8 +91,9 @@ public class EditPathFinder {
 
 
 	private static void processNodeSubstitution(DecoratedGraph from,
-			EditPath editPath, Set<DecoratedNode> mappedFromNodes,
-			Set<DecoratedNode> mappedToNodes, Set<DecoratedNode> unmappedToNodes, 
+			EditPath editPath, Collection<DecoratedNode> mappedFromNodes,
+			Collection<DecoratedNode> mappedToNodes, 
+			Collection<DecoratedNode> unmappedToNodes, 
 			DecoratedNode fromNode, CostContainer costContainer, 
 			Queue<EditPath> open) {
 		
@@ -199,7 +201,7 @@ public class EditPathFinder {
 	
 	
 	private static void processNodeInsertion(DecoratedGraph from, EditPath editPath,
-			Set<DecoratedNode> unmappedToNodes, CostContainer costContainer, 
+			Collection<DecoratedNode> unmappedToNodes, CostContainer costContainer, 
 			Queue<EditPath> open) {
 		
 		EditPath insertionPath = editPath.copy();
