@@ -1,5 +1,7 @@
 package ged.editoperation;
 
+import java.math.BigDecimal;
+
 public abstract class EditOperation {
 	
 	private CostContainer costContainer;
@@ -10,11 +12,11 @@ public abstract class EditOperation {
 	}
 
 
-	public double getCost() {
+	public BigDecimal getCost() {
 		return doGetCost(costContainer);
 	}
 
 
-	protected abstract double doGetCost(CostContainer costContainer);
+	protected abstract BigDecimal doGetCost(CostContainer costContainer);
 	
 }

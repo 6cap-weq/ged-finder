@@ -3,6 +3,7 @@ package ged.editpath;
 import ged.graph.DecoratedGraph;
 import ged.graph.DecoratedNode;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -15,7 +16,7 @@ public class EditPath implements Comparable<EditPath> {
 	
 	private List<NodeEditPath> nodeEditPaths = new ArrayList<NodeEditPath>();
 	
-	private Double cost;
+	private BigDecimal cost;
 	
 	private boolean complete;
 	
@@ -38,12 +39,12 @@ public class EditPath implements Comparable<EditPath> {
 	}
 	
 	
-	public double getCost() {
+	public BigDecimal getCost() {
 		if(cost == null) {
-			cost = 0.0;
+			cost = new BigDecimal("0.0");
 			
 			for(NodeEditPath nodeEditPath : nodeEditPaths) {
-				cost += nodeEditPath.getCost();
+				cost = cost.add(nodeEditPath.getCost());
 			}
 		}
 		
@@ -52,7 +53,7 @@ public class EditPath implements Comparable<EditPath> {
 	
 	
 	public int compareTo(EditPath editPath) {
-		return Double.compare(getCost(), editPath.getCost());
+		return getCost().compareTo(editPath.getCost());
 	}
 	
 
