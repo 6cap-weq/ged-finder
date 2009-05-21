@@ -105,7 +105,7 @@ public class EditPathFinder {
 			
 			EditOperation substitution = new NodeSubstitution(fromNode, unmappedToNode, costContainer);
 			substitutionNodeEditPath.addEditOperation(substitution);
-			
+						
 			for(DecoratedNode adjacentFrom : fromNode.getAdjacent()) {
 				DecoratedNode adjacentTo = null;
 				
@@ -114,7 +114,7 @@ public class EditPathFinder {
 						adjacentTo = substitutionEditPath.getMapped(adjacentFrom);
 					}
 				} else {
-					adjacentTo = adjacentFrom;
+					adjacentTo = unmappedToNode;
 				}
 								
 				if(adjacentTo != null && !unmappedToNode.isAdjacent(adjacentTo)) {
@@ -131,7 +131,7 @@ public class EditPathFinder {
 						adjacentFrom = substitutionEditPath.getMappedReverse(adjacentTo);
 					}
 				} else {
-					adjacentFrom = adjacentTo;
+					adjacentFrom = fromNode;
 				}
 								
 				if(adjacentFrom != null && !fromNode.isAdjacent(adjacentFrom)) {
