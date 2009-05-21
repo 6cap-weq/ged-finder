@@ -99,26 +99,31 @@ class CostPanel extends JPanel {
 		CostContainer costContainer = new CostContainer();
 		
 		if(nodeInsertionCost != null) {
-			costContainer.setNodeInsertionCost(BigDecimal.valueOf(nodeInsertionCost.doubleValue()).setScale(2));
+			costContainer.setNodeInsertionCost(convertToBigDecimal(nodeInsertionCost));
 		}
 		
 		if(edgeInsertionCost != null) {
-			costContainer.setEdgeInsertionCost(BigDecimal.valueOf(edgeInsertionCost.doubleValue()).setScale(2));
+			costContainer.setEdgeInsertionCost(convertToBigDecimal(edgeInsertionCost));
 		}
 		
 		if(nodeDeletionCost != null) {
-			costContainer.setNodeDeletionCost(BigDecimal.valueOf(nodeDeletionCost.doubleValue()).setScale(2));
+			costContainer.setNodeDeletionCost(convertToBigDecimal(nodeDeletionCost));
 		}
 		
 		if(edgeDeletionCost != null) {
-			costContainer.setEdgeDeletionCost(BigDecimal.valueOf(edgeDeletionCost.doubleValue()).setScale(2));
+			costContainer.setEdgeDeletionCost(convertToBigDecimal(edgeDeletionCost));
 		}
 		
 		if(nodeSubstitutionCost != null) {
-			costContainer.setNodeSubstitutionCost(BigDecimal.valueOf(nodeSubstitutionCost.doubleValue()).setScale(2));
+			costContainer.setNodeSubstitutionCost(convertToBigDecimal(nodeSubstitutionCost));
 		}
 		
 		return costContainer;
+	}
+
+
+	private BigDecimal convertToBigDecimal(Number value) {
+		return BigDecimal.valueOf(value.doubleValue()).setScale(2);
 	}
 	
 }
