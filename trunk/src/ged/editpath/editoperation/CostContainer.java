@@ -3,6 +3,7 @@ package ged.editpath.editoperation;
 import java.math.BigDecimal;
 
 /**
+ * Container for all predefined edit operation costs.
  * 
  * @author Roman Tekhov
  */

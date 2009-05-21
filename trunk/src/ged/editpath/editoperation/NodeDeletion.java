@@ -4,6 +4,11 @@ import ged.graph.DecoratedNode;
 
 import java.math.BigDecimal;
 
+/**
+ * Node deletion edit operation.
+ * 
+ * @author Roman Tekhov
+ */
 public class NodeDeletion extends EditOperation {
 	
 	private DecoratedNode deletedNode;

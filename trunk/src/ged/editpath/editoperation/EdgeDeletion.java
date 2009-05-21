@@ -6,6 +6,11 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Edge deletion edit operation.
+ * 
+ * @author Roman Tekhov
+ */
 public class EdgeDeletion extends EditOperation {
 	
 	private final List<DecoratedNode> deletedEdgeNodes = new ArrayList<DecoratedNode>(2);

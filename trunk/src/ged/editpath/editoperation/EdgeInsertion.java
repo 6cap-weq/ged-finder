@@ -6,6 +6,11 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Edge insertion edit operation.
+ * 
+ * @author Roman Tekhov
+ */
 public class EdgeInsertion extends EditOperation {
 	
 	private final List<DecoratedNode> insertedEdgeNodes = new ArrayList<DecoratedNode>(2);
