@@ -66,19 +66,19 @@ public class NodeEditPath {
 		StringBuilder sb = new StringBuilder();
 		
 		if(from == null && to != null) {
-			sb.append("Insertion of ").
+			sb.append("Insertion of node '").
 				append(to.getLabel());
 		} else if(to == null && from != null) {
-			sb.append("Deletion of ").
+			sb.append("Deletion of node '").
 			append(from.getLabel());
 		} else if(from != null && to != null) {
-			sb.append("Substitution of ").
+			sb.append("Substitution of nodes '").
 				append(from.getLabel()).
-				append(" with ").
+				append("' and '").
 				append(to.getLabel());
 		}
 		
-		return sb.append(" (").append(getCost()).append(")").
+		return sb.append("' (").append(getCost()).append(")").
 			toString();
 	}
 
