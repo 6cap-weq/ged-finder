@@ -1,4 +1,4 @@
-package ged.editoperation;
+package ged.editpath.editoperation;
 
 import ged.StringEditDistance;
 import ged.graph.DecoratedNode;

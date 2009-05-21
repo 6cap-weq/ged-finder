@@ -1,6 +1,6 @@
 package ged;
 
-import ged.editoperation.CostContainer;
+import ged.editpath.editoperation.CostContainer;
 
 public class InputContainer {
 	
