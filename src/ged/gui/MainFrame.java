@@ -2,8 +2,8 @@ package ged.gui;
 
 import ged.InputContainer;
 import ged.Processor;
-import ged.editoperation.CostContainer;
 import ged.editpath.EditPath;
+import ged.editpath.editoperation.CostContainer;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;

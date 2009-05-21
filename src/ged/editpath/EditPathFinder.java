@@ -1,12 +1,12 @@
 package ged.editpath;
 
-import ged.editoperation.CostContainer;
-import ged.editoperation.EdgeDeletion;
-import ged.editoperation.EdgeInsertion;
-import ged.editoperation.EditOperation;
-import ged.editoperation.NodeDeletion;
-import ged.editoperation.NodeInsertion;
-import ged.editoperation.NodeSubstitution;
+import ged.editpath.editoperation.CostContainer;
+import ged.editpath.editoperation.EdgeDeletion;
+import ged.editpath.editoperation.EdgeInsertion;
+import ged.editpath.editoperation.EditOperation;
+import ged.editpath.editoperation.NodeDeletion;
+import ged.editpath.editoperation.NodeInsertion;
+import ged.editpath.editoperation.NodeSubstitution;
 import ged.graph.DecoratedGraph;
 import ged.graph.DecoratedNode;
 

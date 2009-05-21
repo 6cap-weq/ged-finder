@@ -1,8 +1,8 @@
 package ged.gui;
 
-import ged.editoperation.EditOperation;
 import ged.editpath.EditPath;
 import ged.editpath.NodeEditPath;
+import ged.editpath.editoperation.EditOperation;
 
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;

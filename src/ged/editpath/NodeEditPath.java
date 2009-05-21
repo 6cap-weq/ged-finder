@@ -1,6 +1,6 @@
 package ged.editpath;
 
-import ged.editoperation.EditOperation;
+import ged.editpath.editoperation.EditOperation;
 import ged.graph.DecoratedNode;
 
 import java.math.BigDecimal;
