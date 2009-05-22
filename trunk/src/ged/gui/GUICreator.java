@@ -1,7 +1,5 @@
 package ged.gui;
 
-import ged.processor.Processor;
-
 import javax.swing.SwingUtilities;
 
 /**
@@ -11,11 +9,11 @@ import javax.swing.SwingUtilities;
  */
 public class GUICreator {
 	
-	public static void createAndShow(final Processor processor) {
+	public static void createAndShow() {
 		SwingUtilities.invokeLater(new Runnable() {
 
 			public void run() {
-				MainFrame mainFrame = new MainFrame(processor);
+				MainFrame mainFrame = new MainFrame();
 				
 				mainFrame.setVisible(true);
 			}

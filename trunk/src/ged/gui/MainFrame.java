@@ -3,7 +3,6 @@ package ged.gui;
 import ged.editpath.EditPath;
 import ged.editpath.editoperation.CostContainer;
 import ged.processor.InputContainer;
-import ged.processor.Processor;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -30,12 +29,12 @@ class MainFrame extends JFrame implements View {
 	private ComputePanel computePanel;
 	
 	
-	MainFrame(Processor processor) {
+	MainFrame() {
 		super("Graph Edit Distance Calculator");
 								
 		costPanel = new CostPanel();
 		dotInputPane = new DotInputPanel();
-		computePanel = new ComputePanel(this, processor);
+		computePanel = new ComputePanel(this);
 		
 		JPanel content = new JPanel(new GridBagLayout());
 		getContentPane().add(content);
