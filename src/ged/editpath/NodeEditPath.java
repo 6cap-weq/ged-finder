@@ -12,7 +12,7 @@ public class NodeEditPath {
 	private DecoratedNode from;
 	private DecoratedNode to;
 	
-	private List<EditOperation> editOperations = new ArrayList<EditOperation>();
+	private final List<EditOperation> editOperations = new ArrayList<EditOperation>();
 	
 	private BigDecimal cost;
 	
@@ -37,10 +37,6 @@ public class NodeEditPath {
 
 	public List<EditOperation> getEditOperations() {
 		return editOperations;
-	}
-
-	void setEditOperations(List<EditOperation> editOperations) {
-		this.editOperations = editOperations;
 	}
 	
 	void addEditOperation(EditOperation editOperation) {

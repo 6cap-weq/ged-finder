@@ -7,6 +7,9 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.collections.BidiMap;
+import org.apache.commons.collections.bidimap.TreeBidiMap;
+
 /**
  * A partial or complete mapping between two graphs.
  * Wraps a collection of individual {@link NodeEditPath}
@@ -20,14 +23,13 @@ public class EditPath implements Comparable<EditPath> {
 	private DecoratedGraph from;
 	private DecoratedGraph to;
 	
-	private List<NodeEditPath> nodeEditPaths = new ArrayList<NodeEditPath>();
+	private final List<NodeEditPath> nodeEditPaths = new ArrayList<NodeEditPath>();
 	
 	private BigDecimal cost;
 	
 	private boolean complete;
-	
-	private List<DecoratedNode> mappedFromNodes;
-	private List<DecoratedNode> mappedToNodes;
+		
+	private final BidiMap nodeMap = new TreeBidiMap();;
 	
 	
 	EditPath(DecoratedGraph from, DecoratedGraph to) {
@@ -49,6 +51,10 @@ public class EditPath implements Comparable<EditPath> {
 	 */
 	void addNodeEditPath(NodeEditPath nodeEditPath) {
 		nodeEditPaths.add(nodeEditPath);
+		
+		if(nodeEditPath.getFrom() != null && nodeEditPath.getTo() != null) {
+			nodeMap.put(nodeEditPath.getFrom(), nodeEditPath.getTo());
+		}
 	}
 	
 	
@@ -87,51 +93,17 @@ public class EditPath implements Comparable<EditPath> {
 	
 	
 	/**
-	 * @return list of all mapped nodes of the source graph
-	 */
-	List<DecoratedNode> getMappedFromNodes() {
-		if(mappedFromNodes == null) {
-			mappedFromNodes = new ArrayList<DecoratedNode>();
-			
-			for(NodeEditPath nodeEditPath : nodeEditPaths) {
-				if(nodeEditPath.getFrom() != null) {
-					mappedFromNodes.add(nodeEditPath.getFrom());
-				}
-			}
-		}
-		
-		return mappedFromNodes;
-	}
-	
-	
-	/**
-	 * @return list of all mapped nodes of the destination graph
-	 */
-	List<DecoratedNode> getMappedToNodes() {
-		if(mappedToNodes == null) {
-			mappedToNodes = new ArrayList<DecoratedNode>();
-			
-			for(NodeEditPath nodeEditPath : nodeEditPaths) {
-				if(nodeEditPath.getTo() != null) {
-					mappedToNodes.add(nodeEditPath.getTo());
-				}
-			}
-		}
-		
-		return mappedToNodes;
-	}
-	
-	
-	/**
 	 * Creates and returns a copy of this edit path which
 	 * contains the same set of individual node edit paths.
 	 * 
 	 * @return copy of this edit path
 	 */
+	@SuppressWarnings("unchecked")
 	EditPath copy() {
 		EditPath copy = new EditPath(getFrom(), getTo());
 		
-		copy.getNodeEditPaths().addAll(getNodeEditPaths());
+		copy.nodeEditPaths.addAll(nodeEditPaths);
+		copy.nodeMap.putAll(nodeMap);
 		
 		return copy;
 	}
@@ -148,14 +120,7 @@ public class EditPath implements Comparable<EditPath> {
 	 * 			<code>null</code> if not found
 	 */
 	public DecoratedNode getMapped(DecoratedNode from) {
-		for(NodeEditPath nodeEditPath : nodeEditPaths) {
-			if(nodeEditPath.getFrom() != null && 
-					nodeEditPath.getFrom().equals(from)) {
-				return nodeEditPath.getTo();
-			}
-		}
-		
-		return null;
+		return (DecoratedNode)nodeMap.get(from);
 	}
 	
 	
@@ -170,14 +135,7 @@ public class EditPath implements Comparable<EditPath> {
 	 * 			<code>null</code> if not found
 	 */
 	public DecoratedNode getMappedReverse(DecoratedNode to) {
-		for(NodeEditPath nodeEditPath : nodeEditPaths) {
-			if(nodeEditPath.getTo() != null && 
-					nodeEditPath.getTo().equals(to)) {
-				return nodeEditPath.getFrom();
-			}
-		}
-		
-		return null;
+		return (DecoratedNode)nodeMap.getKey(to);
 	}
 
 	

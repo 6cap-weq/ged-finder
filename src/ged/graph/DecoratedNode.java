@@ -3,13 +3,17 @@ package ged.graph;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.commons.lang.builder.CompareToBuilder;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+
 import att.grappa.Node;
 
 /**
  * 
  * @author Roman Tekhov
  */
-public class DecoratedNode {
+public class DecoratedNode implements Comparable<DecoratedNode> {
 
 	private String label;
 	
@@ -66,6 +70,41 @@ public class DecoratedNode {
 	@Override
 	public String toString() {
 		return label;
+	}
+
+
+	@Override
+	public int compareTo(DecoratedNode node) {
+		return new CompareToBuilder().
+			append(getGrappaNode().getGraph(), 
+					node.getGrappaNode().getGraph()).
+			append(getLabel(), node.getLabel()).
+			toComparison();
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if(!(obj instanceof DecoratedNode)) {
+			return false;
+		}
+		
+		DecoratedNode node = (DecoratedNode)obj;
+		
+		return new EqualsBuilder().
+			append(getGrappaNode().getGraph(), 
+				node.getGrappaNode().getGraph()).
+			append(getLabel(), node.getLabel()).
+			isEquals();
+	}
+
+
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder().
+			append(getGrappaNode().getGraph()).
+			append(getLabel()).
+			toHashCode();
 	}
 
 }
