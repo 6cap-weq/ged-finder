@@ -17,6 +17,7 @@ public class Processor {
 	
 	
 	public OutputContainer process(InputContainer inputContainer) throws DotParseException {
+		// Parse the input graphs
 		DecoratedGraph first = GraphConverter.parse(inputContainer.getFromDot());
 		DecoratedGraph second = GraphConverter.parse(inputContainer.getToDot());
 		
@@ -25,10 +26,13 @@ public class Processor {
 			throw new DotParseException("Can't compare directed and undirected graphs!");
 		}
 		
+		// Calculate the edit path
 		EditPath editPath = EditPathFinder.find(first, second, inputContainer.getCostContainer());
 		
+		// Form the combined result graph
 		Graph graph = GraphConverter.combine(editPath);
-				
+		
+		// Display result
 		return new OutputContainer(graph, editPath);
 	}
 

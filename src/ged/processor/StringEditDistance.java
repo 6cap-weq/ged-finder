@@ -26,7 +26,7 @@ public class StringEditDistance {
 	public static BigDecimal calculateCoefficient(String str1, String str2) {
 		String a, b;
 		
-		// determine the shorter string
+		// Determine the shorter string
 		if(str1.length() < str2.length()) {
 			a = str1;
 			b = str2;

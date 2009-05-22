@@ -8,7 +8,7 @@ import java.util.Set;
 import att.grappa.Graph;
 
 /**
- * A decorator wrapping a {@link Graph} instance.
+ * A decorator wrapping an instance of Grappa {@link Graph}.
  * 
  * @author Roman Tekhov
  */
