@@ -26,12 +26,24 @@ import att.grappa.Parser;
 import att.grappa.Subgraph;
 
 /**
+ * Component responsible for various graph conversions.
  * 
  * @author Roman Tekhov
  */
 public class GraphConverter {
 	
 	
+	/**
+	 * Parses the given DOT expression to a {@link DecoratedNode} instance.
+	 * Delegates to Grappa {@link Parser} to do the actual conversion and then 
+	 * post-processes the obtained Grappa graph to produce a {@link DecoratedNode}.
+	 * 
+	 * @param dotStr DOT expression to parse
+	 * 
+	 * @return parsed graph
+	 * 
+	 * @throws DotParseException in case of parsing errors
+	 */
 	@SuppressWarnings("unchecked")
 	public static DecoratedGraph parse(String dotStr) throws DotParseException {
 		if(dotStr == null || "".equals(dotStr)) {
@@ -102,6 +114,17 @@ public class GraphConverter {
 	
 	
 	
+	/**
+	 * Combines the source and destination graphs of the given
+	 * edit path to a single combined Grappa {@link Graph}. 
+	 * 
+	 * Also creates additional edges between substituted nodes of 
+	 * the graphs using the information from the edit path.
+	 *  
+	 * @param editPath edit path to use during the combination process
+	 * 
+	 * @return a Grappa graph representing the combined result
+	 */
 	public static Graph combine(EditPath editPath) {		
 		Graph from = editPath.getFrom().getGrappaGraph();
 		Graph to = editPath.getTo().getGrappaGraph();

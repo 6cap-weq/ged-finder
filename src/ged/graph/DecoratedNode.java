@@ -10,6 +10,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import att.grappa.Node;
 
 /**
+ * A decorator wrapping a {@link Node} instance.
  * 
  * @author Roman Tekhov
  */
