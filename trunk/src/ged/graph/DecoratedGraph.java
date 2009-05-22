@@ -55,7 +55,7 @@ public class DecoratedGraph {
 	}
 	
 	
-	public List<DecoratedNode> getRestNodes(Collection<DecoratedNode> nodes) {
+	public Collection<DecoratedNode> getRestNodes(Collection<DecoratedNode> nodes) {
 		List<DecoratedNode> restNodes = new ArrayList<DecoratedNode>();
 		
 		for(DecoratedNode node : this.nodes) {

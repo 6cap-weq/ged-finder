@@ -10,8 +10,8 @@ import ged.editpath.editoperation.NodeSubstitution;
 import ged.graph.DecoratedGraph;
 import ged.graph.DecoratedNode;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
@@ -72,10 +72,21 @@ public class EditPathFinder {
 
 	private static void process(DecoratedGraph from, DecoratedGraph to, EditPath minimumCostPath,
 			Queue<EditPath> open, CostContainer costContainer) {
-	
-		List<DecoratedNode> mappedFromNodes = minimumCostPath.getMappedFromNodes();
-		List<DecoratedNode> mappedToNodes = minimumCostPath.getMappedToNodes();
-		List<DecoratedNode> unmappedToNodes = to.getRestNodes(mappedToNodes);
+				
+		Collection<DecoratedNode> mappedFromNodes = new ArrayList<DecoratedNode>();
+		Collection<DecoratedNode> mappedToNodes = new ArrayList<DecoratedNode>();
+					
+		for(NodeEditPath nodeEditPath : minimumCostPath.getNodeEditPaths()) {
+			if(nodeEditPath.getFrom() != null) {
+				mappedFromNodes.add(nodeEditPath.getFrom());
+			}
+			
+			if(nodeEditPath.getTo() != null) {
+				mappedToNodes.add(nodeEditPath.getTo());
+			}
+		}		
+		
+		Collection<DecoratedNode> unmappedToNodes = to.getRestNodes(mappedToNodes);
 		
 		if(mappedFromNodes.size() < from.getNodeNumber()) {
 			DecoratedNode nextFromNode = from.getNextNode(mappedFromNodes);
@@ -83,7 +94,7 @@ public class EditPathFinder {
 			processNodeSubstitution(from, minimumCostPath, mappedFromNodes, mappedToNodes, 
 					unmappedToNodes, nextFromNode, costContainer, open);
 			
-			processNodeDeletion(from, to, nextFromNode, minimumCostPath.copy(), costContainer, open);
+			processNodeDeletion(from, to, nextFromNode, minimumCostPath, costContainer, open);
 		} else {
 			processNodeInsertion(from, minimumCostPath, unmappedToNodes, costContainer, open);
 		}
@@ -175,6 +186,8 @@ public class EditPathFinder {
 	private static void processNodeDeletion(DecoratedGraph from, DecoratedGraph to, 
 			DecoratedNode node, EditPath deletionEditPath,
 			CostContainer costContainer, Queue<EditPath> open) {
+		
+		deletionEditPath = deletionEditPath.copy();
 		
 		NodeEditPath deletionNodeEditPath = new NodeEditPath();
 		
