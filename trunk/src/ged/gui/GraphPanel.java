@@ -9,6 +9,14 @@ import javax.swing.JScrollPane;
 import att.grappa.Graph;
 import att.grappa.GrappaPanel;
 
+/**
+ * Component for displaying the combined result graph visually.
+ * 
+ * Delegates to {@link GrappaPanel} to create the graphical
+ * representation.
+ * 
+ * @author Roman Tekhov
+ */
 class GraphPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;

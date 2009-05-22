@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import att.grappa.Graph;
 
 /**
+ * The main window for input data submission.
  * 
  * @author Roman Tekhov
  */

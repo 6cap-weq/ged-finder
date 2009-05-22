@@ -4,6 +4,11 @@ import ged.processor.Processor;
 
 import javax.swing.SwingUtilities;
 
+/**
+ * Component encapsulating the GUI creation logic details.
+ * 
+ * @author Roman Tekhov
+ */
 public class GUICreator {
 	
 	public static void createAndShow(final Processor processor) {
