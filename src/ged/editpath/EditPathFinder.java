@@ -121,19 +121,19 @@ public class EditPathFinder {
 			DecoratedNode nextFromNode = from.getNextNode(mappedFromNodes);
 			
 			// Add substitutions between this node and all unmapped destination nodes to the queue.
-			processNodeSubstitution(from, minimumCostPath, mappedFromNodes, mappedToNodes, 
+			processNodeSubstitutions(from, minimumCostPath, mappedFromNodes, mappedToNodes, 
 					unmappedToNodes, nextFromNode, costContainer, open);
 			
 			// Add deletion of this node to the queue.
 			processNodeDeletion(from, to, nextFromNode, minimumCostPath, costContainer, open);
 		} else {
-			// Add insertions of all remaining destination nodes to the queue
-			processNodeInsertion(from, minimumCostPath, unmappedToNodes, costContainer, open);
+			// Add insertions of all remaining destination nodes to the queue.
+			processNodeInsertions(from, minimumCostPath, unmappedToNodes, costContainer, open);
 		}
 	}
 
 
-	private static void processNodeSubstitution(DecoratedGraph from,
+	private static void processNodeSubstitutions(DecoratedGraph from,
 			EditPath editPath, Collection<DecoratedNode> mappedFromNodes,
 			Collection<DecoratedNode> mappedToNodes, 
 			Collection<DecoratedNode> unmappedToNodes, 
@@ -141,8 +141,10 @@ public class EditPathFinder {
 			Queue<EditPath> open) {
 		
 		for(DecoratedNode unmappedToNode : unmappedToNodes) {
+			// Create a copy of edit path.
 			EditPath substitutionEditPath = editPath.copy();
 			
+			// Add node substitution.
 			NodeEditPath substitutionNodeEditPath = new NodeEditPath();
 			
 			substitutionNodeEditPath.setFrom(fromNode);
@@ -150,15 +152,19 @@ public class EditPathFinder {
 			
 			EditOperation substitution = new NodeSubstitution(fromNode, unmappedToNode, costContainer);
 			substitutionNodeEditPath.addEditOperation(substitution);
-						
+			
+			// Check the adjacent nodes of the source node. If the destination node does
+			// not have a corresponding adjacent node then add edge deletion to the queue.
 			for(DecoratedNode adjacentFrom : fromNode.getAdjacent()) {
 				DecoratedNode adjacentTo = null;
 				
 				if(!adjacentFrom.equals(fromNode)) {
+					// Edge to some other mapped source node.
 					if(mappedFromNodes.contains(adjacentFrom)) {
 						adjacentTo = substitutionEditPath.getMapped(adjacentFrom);
 					}
 				} else {
+					// Edge to itself.
 					adjacentTo = unmappedToNode;
 				}
 								
@@ -168,14 +174,18 @@ public class EditPathFinder {
 				}
 			}
 			
+			// Check the adjacent nodes of the destination node. If the source node does
+			// not have a corresponding adjacent node then add edge insertion to the queue.
 			for(DecoratedNode adjacentTo : unmappedToNode.getAdjacent()) {
 				DecoratedNode adjacentFrom = null;
 				
 				if(!adjacentTo.equals(unmappedToNode)) {
+					// Edge to some other mapped destination node.
 					if(mappedToNodes.contains(adjacentTo)) {
 						adjacentFrom = substitutionEditPath.getMappedReverse(adjacentTo);
 					}
 				} else {
+					// Edge to itself.
 					adjacentFrom = fromNode;
 				}
 								
@@ -185,7 +195,10 @@ public class EditPathFinder {
 				}
 			}
 			
+			// In case of directed graph also check incoming edges.
 			if(from.isDirected()) {
+				// Check the nodes connected to the source node. If the destination node does
+				// not have a corresponding node connected to it then add edge deletion to the queue.
 				for(DecoratedNode accessedByFrom : fromNode.getAccessedBy()) {
 					if(mappedFromNodes.contains(accessedByFrom)) {
 						DecoratedNode accessedByTo = substitutionEditPath.getMapped(accessedByFrom);
@@ -197,6 +210,8 @@ public class EditPathFinder {
 					}
 				}
 				
+				// Check the nodes connected to the destination node. If the source node does
+				// not have a corresponding node connected to it then add edge insertion to the queue.
 				for(DecoratedNode accessedByTo : unmappedToNode.getAccessedBy()) {
 					if(mappedToNodes.contains(accessedByTo)) {
 						DecoratedNode accessedByFrom = substitutionEditPath.getMappedReverse(accessedByTo);
@@ -216,11 +231,13 @@ public class EditPathFinder {
 
 	
 	private static void processNodeDeletion(DecoratedGraph from, DecoratedGraph to, 
-			DecoratedNode node, EditPath deletionEditPath,
+			DecoratedNode node, EditPath editPath,
 			CostContainer costContainer, Queue<EditPath> open) {
 		
-		deletionEditPath = deletionEditPath.copy();
+		// Create a copy of edit path.
+		EditPath deletionEditPath = editPath.copy();
 		
+		// Add node deletion.
 		NodeEditPath deletionNodeEditPath = new NodeEditPath();
 		
 		deletionNodeEditPath.setFrom(node);
@@ -228,11 +245,13 @@ public class EditPathFinder {
 		EditOperation deletion = new NodeDeletion(node, costContainer);
 		deletionNodeEditPath.addEditOperation(deletion);
 		
+		// For all adjacent nodes add edge deletions.
 		for(DecoratedNode adjucentNode : node.getAdjacent()) {
 			EditOperation edgeDeletion = new EdgeDeletion(node, adjucentNode, costContainer);
 			deletionNodeEditPath.addEditOperation(edgeDeletion);
 		}
 		
+		// If the graph is directed then also add edge deletions for all incoming edges.
 		if(from.isDirected()) {
 			for(DecoratedNode accessedByNode : node.getAccessedBy()) {
 				EditOperation edgeDeletion = new EdgeDeletion(accessedByNode, node, costContainer);
@@ -245,13 +264,16 @@ public class EditPathFinder {
 	}
 	
 	
-	private static void processNodeInsertion(DecoratedGraph from, EditPath editPath,
+	private static void processNodeInsertions(DecoratedGraph from, EditPath editPath,
 			Collection<DecoratedNode> unmappedToNodes, CostContainer costContainer, 
 			Queue<EditPath> open) {
 		
+		// Create a copy of edit path.
 		EditPath insertionPath = editPath.copy();
 		
+		// Add insertion for all remaining destination nodes.
 		for(DecoratedNode unmappedToNode : unmappedToNodes) {
+			// Add node insertion
 			NodeEditPath insertionNodeEditPath = new NodeEditPath();
 			
 			insertionNodeEditPath.setTo(unmappedToNode);
@@ -261,11 +283,13 @@ public class EditPathFinder {
 			
 			insertionPath.addNodeEditPath(insertionNodeEditPath);
 			
+			// For all adjacent nodes add edge insertions.
 			for(DecoratedNode adjucentNode : unmappedToNode.getAdjacent()) {
 				EditOperation edgeInsertion = new EdgeInsertion(unmappedToNode, adjucentNode, costContainer);
 				insertionNodeEditPath.addEditOperation(edgeInsertion);
 			}
 			
+			// If the graph is directed then also add edge insertions for all incoming edges.
 			if(from.isDirected()) {
 				for(DecoratedNode accessedByNode : unmappedToNode.getAccessedBy()) {
 					EditOperation edgeInsertion = new EdgeInsertion(accessedByNode, unmappedToNode, costContainer);
