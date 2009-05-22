@@ -8,6 +8,8 @@ import ged.graph.GraphConverter;
 import att.grappa.Graph;
 
 /**
+ * Component responsible for evaluating the entire edit distance
+ * computation procedure together with related pre- and post-activities.
  * 
  * @author Roman Tekhov
  */

@@ -3,6 +3,12 @@ package ged.processor;
 import ged.editpath.EditPath;
 import att.grappa.Graph;
 
+/**
+ * Output data container. Output data includes the edit path
+ * and the combined Grappa graph.
+ * 
+ * @author Roman Tekhov
+ */
 public class OutputContainer {
 	
 	private Graph graph;
