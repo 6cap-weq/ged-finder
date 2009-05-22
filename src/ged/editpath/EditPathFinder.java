@@ -97,7 +97,8 @@ public class EditPathFinder {
 
 	private static void process(DecoratedGraph from, DecoratedGraph to, EditPath minimumCostPath,
 			Queue<EditPath> open, CostContainer costContainer) {
-				
+		
+		// All mapped source and destination nodes of the path.
 		Collection<DecoratedNode> mappedFromNodes = new ArrayList<DecoratedNode>();
 		Collection<DecoratedNode> mappedToNodes = new ArrayList<DecoratedNode>();
 					
@@ -111,6 +112,7 @@ public class EditPathFinder {
 			}
 		}		
 		
+		// All unmapped destination nodes. 
 		Collection<DecoratedNode> unmappedToNodes = to.getRestNodes(mappedToNodes);
 		
 		if(mappedFromNodes.size() < from.getNodeNumber()) {

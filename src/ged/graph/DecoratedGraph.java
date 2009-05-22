@@ -30,12 +30,27 @@ public class DecoratedGraph {
 		return nodes;
 	}
 	
-		
+	
+	/**
+	 * @return total number of nodes in this graph
+	 */
 	public int getNodeNumber() {
 		return nodes.size();
 	}
 	
 	
+	/**
+	 * Returns the next node relative to the given nodes, i.e. the node
+	 * that belongs to this graph but not to the given nodes.
+	 * 
+	 * If possible returns the node adjacent to some of the given nodes.
+	 * If there are no such nodes left returns the next random node of
+	 * the graph.
+	 * 
+	 * @param nodes nodes to use while searching for the next node
+	 * 
+	 * @return next node
+	 */
 	public DecoratedNode getNextNode(Collection<DecoratedNode> nodes) {
 		if(nodes != null) {
 			for(DecoratedNode fromNode : nodes) {
@@ -57,6 +72,13 @@ public class DecoratedGraph {
 	}
 	
 	
+	/**
+	 * Gets all other nodes of this graph.
+	 * 
+	 * @param nodes nodes to exclude
+	 * 
+	 * @return the rest nodes
+	 */
 	public Collection<DecoratedNode> getRestNodes(Collection<DecoratedNode> nodes) {
 		List<DecoratedNode> restNodes = new ArrayList<DecoratedNode>();
 		
