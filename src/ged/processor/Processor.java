@@ -16,7 +16,7 @@ import att.grappa.Graph;
 public class Processor {
 	
 	
-	public OutputContainer process(InputContainer inputContainer) throws DotParseException {
+	public static OutputContainer process(InputContainer inputContainer) throws DotParseException {
 		// Parse the input graphs
 		DecoratedGraph first = GraphConverter.parse(inputContainer.getFromDot());
 		DecoratedGraph second = GraphConverter.parse(inputContainer.getToDot());

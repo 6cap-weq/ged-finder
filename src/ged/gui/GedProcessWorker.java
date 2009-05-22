@@ -19,12 +19,10 @@ import javax.swing.SwingWorker;
 class GedProcessWorker extends SwingWorker<OutputContainer, Void> {
 	
 	private View view;
-	private Processor processor;
 	
 
-	GedProcessWorker(View view, Processor processor) {
+	GedProcessWorker(View view) {
 		this.view = view;
-		this.processor = processor;
 		
 		addPropertyChangeListener(new ComputeTriggerDisablingListener());
 	}
@@ -34,7 +32,7 @@ class GedProcessWorker extends SwingWorker<OutputContainer, Void> {
 	protected OutputContainer doInBackground() throws DotParseException {
 		InputContainer inputContainer = view.getInputContainer();
 		
-		return processor.process(inputContainer);
+		return Processor.process(inputContainer);
 	}
 
 
