@@ -3,7 +3,7 @@ package ged.editpath.editoperation;
 import java.math.BigDecimal;
 
 /**
- * Container for all predefined edit operation costs.
+ * Container for all predefined edit operation costs and an acceptance limit cost.
  * 
  * @author Roman Tekhov
  */
@@ -16,6 +16,8 @@ public class CostContainer {
 	private BigDecimal nodeDeletionCost = DEFAULT_COST;
 	private BigDecimal nodeInsertionCost = DEFAULT_COST;
 	private BigDecimal nodeSubstitutionCost = DEFAULT_COST;
+	
+	private BigDecimal acceptanceLimitCost;
 	
 	
 	public BigDecimal getEdgeDeletionCost() {
@@ -56,6 +58,14 @@ public class CostContainer {
 	
 	public void setNodeSubstitutionCost(BigDecimal nodeSubstitutionCost) {
 		this.nodeSubstitutionCost = nodeSubstitutionCost;
+	}
+
+	public BigDecimal getAcceptanceLimitCost() {
+		return acceptanceLimitCost;
+	}
+
+	public void setAcceptanceLimitCost(BigDecimal acceptanceLimitCost) {
+		this.acceptanceLimitCost = acceptanceLimitCost;
 	}
 
 }

@@ -1,5 +1,6 @@
 package ged.processor;
 
+import ged.editpath.CostLimitExceededException;
 import ged.editpath.EditPath;
 import ged.editpath.EditPathFinder;
 import ged.graph.DecoratedGraph;
@@ -8,15 +9,27 @@ import ged.graph.GraphConverter;
 import att.grappa.Graph;
 
 /**
- * Component responsible for evaluating the entire edit distance
- * computation procedure together with related pre- and post-activities.
+ * Component responsible for evaluating the entire edit distance computation
+ * procedure together with related pre- and post-activities.
  * 
  * @author Roman Tekhov
  */
 public class Processor {
 	
-	
-	public static OutputContainer process(InputContainer inputContainer) throws DotParseException {
+	/**
+	 * Converts the input data to graph structures, executes the edit distance
+	 * finding algorithm, prepares and returns the output.
+	 * 
+	 * @param inputContainer input data 
+	 * @return output data
+	 * 
+	 * @throws DotParseException in case of DOT to graph parsing errors
+	 * @throws CostLimitExceededException in case when an acceptable cost
+	 * 			limit has been exceeded
+	 */
+	public static OutputContainer process(InputContainer inputContainer) 
+				throws DotParseException, CostLimitExceededException {
+		
 		// Parse the input graphs
 		DecoratedGraph first = GraphConverter.parse(inputContainer.getFromDot());
 		DecoratedGraph second = GraphConverter.parse(inputContainer.getToDot());
