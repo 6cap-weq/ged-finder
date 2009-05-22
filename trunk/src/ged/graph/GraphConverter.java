@@ -38,19 +38,21 @@ public class GraphConverter {
 	 * Delegates to Grappa {@link Parser} to do the actual conversion and then 
 	 * post-processes the obtained Grappa graph to produce a {@link DecoratedNode}.
 	 * 
-	 * @param dotStr DOT expression to parse
+	 * @param dotExpr DOT expression to parse
 	 * 
 	 * @return parsed graph
 	 * 
 	 * @throws DotParseException in case of parsing errors
 	 */
 	@SuppressWarnings("unchecked")
-	public static DecoratedGraph parse(String dotStr) throws DotParseException {
-		if(dotStr == null || "".equals(dotStr)) {
+	public static DecoratedGraph parse(String dotExpr) throws DotParseException {
+		if(dotExpr == null || "".equals(dotExpr)) {
 			throw new DotParseException("Empty DOT input!");
 		}
 		
-		InputStream inputStream = new ByteArrayInputStream(dotStr.getBytes());
+		// Parse the DOT expression using Grappa parser.
+		
+		InputStream inputStream = new ByteArrayInputStream(dotExpr.getBytes());
 		
 		Parser grappaParser = new Parser(inputStream);
 		
@@ -61,6 +63,8 @@ public class GraphConverter {
 		} catch (Exception e) {
 			throw new DotParseException(e.getMessage());
 		}		
+		
+		// Build node adjacency lists and wrap the Grappa elements into decorated elements.
 		
 		Enumeration<Node> grappaNodes = grappaGraph.nodeElements();
 		
@@ -137,10 +141,12 @@ public class GraphConverter {
 				from.isDirected(), false);
 		combined.setShowSubgraphLabels(true);
 		combined.setAttribute(Attribute.LABEL_ATTR, combined.getName());
-	
+		
+		// Each input graph represents a subgraph cluster of the combined graph.
 		Subgraph fromSubgraph = new Subgraph(combined, "cluster1_" + from.getName());
 		Subgraph toSubgraph = new Subgraph(combined, "cluster2_" + to.getName());
 		
+		// Copy attributes, nodes and edges to the combined graph.
 		copyAttributes(from, fromSubgraph);
 		copyAttributes(to, toSubgraph);
 		
@@ -155,6 +161,8 @@ public class GraphConverter {
 		copyEdges(from, fromSubgraph, nodeMap);
 		copyEdges(to, toSubgraph, nodeMap);
 		
+		// Create additional styles for inserted and deleted nodes.
+		// Create additional edges between substituted nodes.
 		for(NodeEditPath nodeEditPath : editPath.getNodeEditPaths()) {
 			BigDecimal cost = nodeEditPath.getCost();
 			
@@ -168,10 +176,14 @@ public class GraphConverter {
 			Node newNodeTo = oldNodeTo == null ? null : nodeMap.get(oldNodeTo);
 			
 			if(newNodeFrom == null) {
+				// Make all inserted nodes green.
 				configureInsertedOrDeleted(newNodeTo, Color.GREEN, cost);
 			} else if(newNodeTo == null) {
+				// Make all deleted nodes red.
 				configureInsertedOrDeleted(newNodeFrom, Color.RED, cost);
 			} else {
+				// Make all substituted nodes yellow and create additional  
+				// dashed edges between them with substitution cost as label.
 				setNodeColor(newNodeFrom, Color.YELLOW);
 				setNodeColor(newNodeTo, Color.YELLOW);
 				
@@ -184,6 +196,7 @@ public class GraphConverter {
 			}
 		}
 		
+		// Add layout information (Grappa doesn't provide any).
 		createLayout(combined);
 						
 		return combined;
@@ -254,6 +267,7 @@ public class GraphConverter {
 	private static void configureInsertedOrDeleted(Node node, Color color, BigDecimal cost) {
 		setNodeColor(node, color);
 		
+		// Add insertion or deletion cost to node's label.
 		node.setAttribute(Attribute.LABEL_ATTR, 
 				node.getAttributeValue(Attribute.LABEL_ATTR).toString() + 
 					"(" + cost + ")");
@@ -261,6 +275,9 @@ public class GraphConverter {
 	
 	
 	private static void createLayout(Graph grappaGraph) {
+		// Use an external program to produce layout information.
+		// For directed graphs use "dot", for undirected graphs use "neato".
+		
 		ProcessBuilder pb;
 		
 		if(grappaGraph.isDirected()) {
