@@ -7,6 +7,14 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * An edit path between a source graph node and a destination
+ * graph node involving a series of edit operations. An overall
+ * cost of node edit path is the sum of costs of all its edit
+ * operations.
+ * 
+ * @author Roman Tekhov
+ */
 public class NodeEditPath {
 	
 	private DecoratedNode from;
@@ -34,16 +42,27 @@ public class NodeEditPath {
 		this.to = to;
 	}
 
-
+	
+	/**
+	 * @return this node edit path's edit operations
+	 */
 	public List<EditOperation> getEditOperations() {
 		return editOperations;
 	}
 	
+	/**
+	 * Adds a new edit operation to this path.
+	 * 
+	 * @param editOperation new edit operation
+	 */
 	void addEditOperation(EditOperation editOperation) {
 		editOperations.add(editOperation);
 	}
 	
 	
+	/**
+	 * @return overall cost of this node edit path
+	 */
 	public BigDecimal getCost() {
 		if(cost == null) {
 			cost = new BigDecimal("0.00");

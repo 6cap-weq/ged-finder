@@ -8,6 +8,8 @@ import java.util.Set;
 import att.grappa.Graph;
 
 /**
+ * A decorator wrapping a {@link Graph} instance.
+ * 
  * @author Roman Tekhov
  */
 public class DecoratedGraph {
