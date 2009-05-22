@@ -15,31 +15,55 @@ import java.util.Collection;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
+/**
+ * Graph edit distance finding algorithm.
+ * 
+ * @author Roman Tekhov
+ */
 public class EditPathFinder {
 	
 	
+	/**
+	 * Finds the edit path between the two given graphs considering
+	 * the costs from the provided cost container.
+	 * 
+	 * @param from source graph
+	 * @param to destination graph
+	 * @param costContainer edit operation cost container
+	 * 
+	 * @return complete edit distance between the two graphs
+	 */
 	public static EditPath find(DecoratedGraph from, DecoratedGraph to, CostContainer costContainer) {
+		// Priority queue for the (partial) edit paths. 
+		// Paths are ordered by their total costs in ascending order.
 		Queue<EditPath> open = new PriorityQueue<EditPath>();
 		
+		// Initial operations before the main loop.
 		init(from, to, open, costContainer);
 		
+		// Main processing iterations.
 		while(true) {
+			// Retrieve the (partial) edit path with the smallest total cost from the queue.
 			EditPath minimumCostPath = open.poll();
 			
+			// If all source graph nodes are mapped return the path as the output.
 			if(minimumCostPath.isComplete()) {
 				return minimumCostPath;
 			}
 			
+			// Process with the path by extending it further.
 			process(from, to, minimumCostPath, open, costContainer);
 		}
 	}
 
 	
-
 	private static void init(DecoratedGraph from, DecoratedGraph to, 
 			Queue<EditPath> open, CostContainer costContainer) {
 		
+		// Get the first random node of the source graph
 		DecoratedNode firstNode = from.getNextNode(null);
+		
+		// Add substitutions for the first source node and each destination node.
 		for(DecoratedNode toNode : to.getNodes()) {			
 			NodeEditPath substitutionNodeEditPath = new NodeEditPath();
 			
@@ -65,6 +89,7 @@ public class EditPathFinder {
 			open.offer(substitutionEditPath);
 		}
 		
+		// Add deletion of the first source node.
 		EditPath deletionEditPath = new EditPath(from, to);
 		processNodeDeletion(from, to, firstNode, deletionEditPath, costContainer, open);
 	}	
