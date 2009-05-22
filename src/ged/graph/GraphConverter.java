@@ -76,6 +76,10 @@ public class GraphConverter {
 			nodes.add(node);
 		}
 		
+		if(nodes.isEmpty()) {
+			throw new DotParseException("The graph has no nodes!");
+		}
+		
 		for(DecoratedNode node : nodes) {
 			Node grappaNode = node.getGrappaNode();
 			
