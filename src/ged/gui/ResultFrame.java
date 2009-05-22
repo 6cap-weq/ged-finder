@@ -9,6 +9,11 @@ import javax.swing.JSplitPane;
 
 import att.grappa.Graph;
 
+/**
+ * Output displaying window.
+ * 
+ * @author Roman Tekhov
+ */
 class ResultFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;

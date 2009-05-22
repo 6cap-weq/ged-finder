@@ -11,6 +11,12 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+/**
+ * Computation trigger rendering and action 
+ * handling component.
+ * 
+ * @author Roman Tekhov
+ */
 class ComputePanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;

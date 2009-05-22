@@ -15,6 +15,7 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.text.NumberFormatter;
 
 /**
+ * Cost input rendering component.
  * 
  * @author Roman Tekhov
  */

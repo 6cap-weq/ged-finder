@@ -11,6 +11,11 @@ import java.util.concurrent.ExecutionException;
 
 import javax.swing.SwingWorker;
 
+/**
+ * A Swing worker performing the GED finding operations.
+ * 
+ * @author Roman Tekhov
+ */
 class GedProcessWorker extends SwingWorker<OutputContainer, Void> {
 	
 	private View view;
@@ -68,6 +73,5 @@ class GedProcessWorker extends SwingWorker<OutputContainer, Void> {
 		}
 
 	}
-
 	
 }
