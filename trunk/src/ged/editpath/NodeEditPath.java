@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * An edit path between a source graph node and a destination
- * graph node involving a series of edit operations. An overall
+ * graph node involving a series of edit operations. The total
  * cost of node edit path is the sum of costs of all its edit
  * operations.
  * 

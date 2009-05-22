@@ -16,7 +16,7 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 
 /**
- * Graph edit distance finding algorithm.
+ * Graph edit distance finding algorithm implementation.
  * 
  * @author Roman Tekhov
  */
@@ -24,8 +24,8 @@ public class EditPathFinder {
 	
 	
 	/**
-	 * Finds the edit path between the two given graphs considering
-	 * the costs from the provided cost container.
+	 * Finds the edit path between two given graphs considering
+	 * costs from the provided cost container.
 	 * 
 	 * @param from source graph
 	 * @param to destination graph

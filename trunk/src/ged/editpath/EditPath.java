@@ -13,8 +13,8 @@ import org.apache.commons.collections.bidimap.TreeBidiMap;
 /**
  * A partial or complete mapping between two graphs.
  * Wraps a collection of individual {@link NodeEditPath}
- * instances. The overall cost of the edit path is the sum 
- * all node edit path costs.
+ * instances. The total cost of the edit path is the sum 
+ * of all node edit path costs.
  * 
  * @author Roman Tekhov
  */
