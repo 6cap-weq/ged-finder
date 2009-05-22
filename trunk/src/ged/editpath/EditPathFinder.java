@@ -63,7 +63,7 @@ public class EditPathFinder {
 		// Get the first random node of the source graph
 		DecoratedNode firstNode = from.getNextNode(null);
 		
-		// Add substitutions for the first source node and each destination node.
+		// Add substitutions for the first source node and each destination node to the queue.
 		for(DecoratedNode toNode : to.getNodes()) {			
 			NodeEditPath substitutionNodeEditPath = new NodeEditPath();
 			
@@ -89,7 +89,7 @@ public class EditPathFinder {
 			open.offer(substitutionEditPath);
 		}
 		
-		// Add deletion of the first source node.
+		// Add deletion of the first source node to the queue.
 		EditPath deletionEditPath = new EditPath(from, to);
 		processNodeDeletion(from, to, firstNode, deletionEditPath, costContainer, open);
 	}	
@@ -115,14 +115,19 @@ public class EditPathFinder {
 		// All unmapped destination nodes. 
 		Collection<DecoratedNode> unmappedToNodes = to.getRestNodes(mappedToNodes);
 		
+		// Check if all source nodes are mapped.
 		if(mappedFromNodes.size() < from.getNodeNumber()) {
+			// If there are some unmapped source nodes left then choose the next source node.			
 			DecoratedNode nextFromNode = from.getNextNode(mappedFromNodes);
 			
+			// Add substitutions between this node and all unmapped destination nodes to the queue.
 			processNodeSubstitution(from, minimumCostPath, mappedFromNodes, mappedToNodes, 
 					unmappedToNodes, nextFromNode, costContainer, open);
 			
+			// Add deletion of this node to the queue.
 			processNodeDeletion(from, to, nextFromNode, minimumCostPath, costContainer, open);
 		} else {
+			// Add insertions of all remaining destination nodes to the queue
 			processNodeInsertion(from, minimumCostPath, unmappedToNodes, costContainer, open);
 		}
 	}
