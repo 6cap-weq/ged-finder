@@ -32,8 +32,13 @@ public class EditPathFinder {
 	 * @param costContainer edit operation cost container
 	 * 
 	 * @return complete edit distance between the two graphs
+	 * 
+	 * @throws CostLimitExceededException in case acceptable cost  
+	 * 			limit has been exceeded
 	 */
-	public static EditPath find(DecoratedGraph from, DecoratedGraph to, CostContainer costContainer) {
+	public static EditPath find(DecoratedGraph from, DecoratedGraph to, CostContainer costContainer) 
+				throws CostLimitExceededException {
+		
 		// Priority queue for the (partial) edit paths. 
 		// Paths are ordered by their total costs in ascending order.
 		Queue<EditPath> open = new PriorityQueue<EditPath>();
@@ -45,6 +50,11 @@ public class EditPathFinder {
 		while(true) {
 			// Retrieve the (partial) edit path with the smallest total cost from the queue.
 			EditPath minimumCostPath = open.poll();
+			
+			if(costContainer.getAcceptanceLimitCost() != null && minimumCostPath.
+					getCost().compareTo(costContainer.getAcceptanceLimitCost()) > 0) {
+				throw new CostLimitExceededException(minimumCostPath.getCost());
+			}
 			
 			// If all source graph nodes are mapped return the path as the output.
 			if(minimumCostPath.isComplete()) {

@@ -6,6 +6,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.math.BigDecimal;
+import java.text.ParseException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFormattedTextField;
@@ -30,6 +31,7 @@ class CostPanel extends JPanel {
 	private JFormattedTextField nodeDeletionCostField; 
 	private JFormattedTextField edgeDeletionCostField;
 	private JFormattedTextField nodeSubstitutionCostField; 
+	private JFormattedTextField acceptanceLimitCostField;
 	
 	private JPanel content;
 	
@@ -45,25 +47,29 @@ class CostPanel extends JPanel {
 		constraints.gridx = 0;
 		constraints.gridy = 0;
 		
-		nodeInsertionCostField = initTextField("Node insertion");
+		nodeInsertionCostField = initTextField("Node insertion", 1D);
 		
 		constraints.gridx++;
 		
-		edgeInsertionCostField = initTextField("Edge insertion");
+		edgeInsertionCostField = initTextField("Edge insertion", 1D);
 		
 		constraints.gridx = 0;
 		constraints.gridy++;
 		
-		nodeDeletionCostField = initTextField("Node deletion");
+		nodeDeletionCostField = initTextField("Node deletion", 1D);
 		
 		constraints.gridx++;
 		
-		edgeDeletionCostField = initTextField("Edge deletion");
+		edgeDeletionCostField = initTextField("Edge deletion", 1D);
 		
 		constraints.gridx = 0;
 		constraints.gridy++;
 		
-		nodeSubstitutionCostField = initTextField("Node substitution");
+		nodeSubstitutionCostField = initTextField("Node substitution", 1D);
+		
+		constraints.gridx++;
+		
+		acceptanceLimitCostField = initTextField("Acceptance limit", null);
 				
 		content.setBorder(BorderFactory.createTitledBorder(BorderFactory.
 				createEtchedBorder(EtchedBorder.LOWERED), "Edit operation costs"));
@@ -72,10 +78,10 @@ class CostPanel extends JPanel {
 	}
 	
 	
-	private JFormattedTextField initTextField(String label) {
-		JFormattedTextField field = new JFormattedTextField(new NumberFormatter());
+	private JFormattedTextField initTextField(String label, Double initialValue) {
+		JFormattedTextField field = new JFormattedTextField(new NullSupportingNumberFormat());
 		
-		field.setValue(1);
+		field.setValue(initialValue);
 		field.setColumns(5);
 		
 		constraints.anchor = GridBagConstraints.EAST;
@@ -90,12 +96,28 @@ class CostPanel extends JPanel {
 	}
 	
 	
+	private static class NullSupportingNumberFormat extends NumberFormatter {
+
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public Object stringToValue(String text) throws ParseException {
+			if(text == null || "".equals(text)) {
+				return null;
+			}
+			
+			return super.stringToValue(text);
+		}
+	}
+	
+	
 	CostContainer getCostContainer() {
 		Number nodeInsertionCost = (Number)nodeInsertionCostField.getValue();
 		Number edgeInsertionCost = (Number)edgeInsertionCostField.getValue();
 		Number nodeDeletionCost = (Number)nodeDeletionCostField.getValue();
 		Number edgeDeletionCost = (Number)edgeDeletionCostField.getValue();
 		Number nodeSubstitutionCost = (Number)nodeSubstitutionCostField.getValue();
+		Number acceptanceLimitCost = (Number)acceptanceLimitCostField.getValue();
 		
 		CostContainer costContainer = new CostContainer();
 		
@@ -117,6 +139,10 @@ class CostPanel extends JPanel {
 		
 		if(nodeSubstitutionCost != null) {
 			costContainer.setNodeSubstitutionCost(convertToBigDecimal(nodeSubstitutionCost));
+		}
+		
+		if(acceptanceLimitCost != null) {
+			costContainer.setAcceptanceLimitCost(convertToBigDecimal(acceptanceLimitCost));
 		}
 		
 		return costContainer;

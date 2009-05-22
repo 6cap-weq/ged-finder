@@ -1,5 +1,6 @@
 package ged.gui;
 
+import ged.editpath.CostLimitExceededException;
 import ged.graph.DotParseException;
 import ged.processor.InputContainer;
 import ged.processor.OutputContainer;
@@ -29,7 +30,7 @@ class GedProcessWorker extends SwingWorker<OutputContainer, Void> {
 
 
 	@Override
-	protected OutputContainer doInBackground() throws DotParseException {
+	protected OutputContainer doInBackground() throws DotParseException, CostLimitExceededException {
 		InputContainer inputContainer = view.getInputContainer();
 		
 		return Processor.process(inputContainer);
@@ -45,13 +46,20 @@ class GedProcessWorker extends SwingWorker<OutputContainer, Void> {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (ExecutionException e) {
+			String message;
 			if(e.getCause() instanceof DotParseException) {
 				DotParseException dotParseException = (DotParseException)e.getCause();
 				
-				view.showError("DOT parse error - " + dotParseException.getMessage());
+				message = "DOT parse error - " + dotParseException.getMessage();
+			} else if(e.getCause() instanceof CostLimitExceededException) {
+				CostLimitExceededException limitException = (CostLimitExceededException)e.getCause();
+				
+				message = "Acceptable cost limit exceeded - " + limitException.getCost().toPlainString();
 			} else {
-				view.showError("Unexpected error - " + e.getMessage());
+				message = "Unexpected error - " + e.getMessage();
 			}
+			
+			view.showError(message);
 			
 			e.printStackTrace();
 		} finally {
