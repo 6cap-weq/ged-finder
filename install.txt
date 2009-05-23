@@ -1,0 +1,10 @@
+
+Installation.
+
+1. Download Java 6 Runtime Environment (JRE separately or as part of JDK) from
+http://java.sun.com/javase and install it.
+
+2. Download GraphViz from http://www.graphviz.org/ and install it. Add the "bin"
+ directory which contains the "dot" and "neato" programs must to the machine's path.
+
+3. Double-click the ged-finder.jar file or start the ged.Start class from the command line.
