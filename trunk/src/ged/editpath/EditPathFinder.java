@@ -41,15 +41,15 @@ public class EditPathFinder {
 		
 		// Priority queue for the (partial) edit paths. 
 		// Paths are ordered by their total costs in ascending order.
-		Queue<EditPath> open = new PriorityQueue<EditPath>();
+		Queue<EditPath> queue = new PriorityQueue<EditPath>();
 		
 		// Initial operations before the main loop.
-		init(from, to, open, costContainer);
+		init(from, to, queue, costContainer);
 		
 		// Main processing iterations.
 		while(true) {
 			// Retrieve the (partial) edit path with the smallest total cost from the queue.
-			EditPath minimumCostPath = open.poll();
+			EditPath minimumCostPath = queue.poll();
 			
 			if(costContainer.getAcceptanceLimitCost() != null && minimumCostPath.
 					getCost().compareTo(costContainer.getAcceptanceLimitCost()) > 0) {
@@ -62,13 +62,13 @@ public class EditPathFinder {
 			}
 			
 			// Process with the path by extending it further.
-			process(from, to, minimumCostPath, open, costContainer);
+			process(from, to, minimumCostPath, queue, costContainer);
 		}
 	}
 
 	
 	private static void init(DecoratedGraph from, DecoratedGraph to, 
-			Queue<EditPath> open, CostContainer costContainer) {
+			Queue<EditPath> queue, CostContainer costContainer) {
 		
 		// Get the first random node of the source graph
 		DecoratedNode firstNode = from.getNextNode(null);
@@ -96,17 +96,17 @@ public class EditPathFinder {
 			
 			EditPath substitutionEditPath = new EditPath(from, to);
 			substitutionEditPath.addNodeEditPath(substitutionNodeEditPath);
-			open.offer(substitutionEditPath);
+			queue.offer(substitutionEditPath);
 		}
 		
 		// Add deletion of the first source node to the queue.
 		EditPath deletionEditPath = new EditPath(from, to);
-		processNodeDeletion(from, to, firstNode, deletionEditPath, costContainer, open);
+		processNodeDeletion(from, to, firstNode, deletionEditPath, costContainer, queue);
 	}	
 	
 
 	private static void process(DecoratedGraph from, DecoratedGraph to, EditPath minimumCostPath,
-			Queue<EditPath> open, CostContainer costContainer) {
+			Queue<EditPath> queue, CostContainer costContainer) {
 		
 		// All mapped source and destination nodes of the path.
 		Collection<DecoratedNode> mappedFromNodes = new ArrayList<DecoratedNode>();
@@ -132,13 +132,13 @@ public class EditPathFinder {
 			
 			// Add substitutions between this node and all unmapped destination nodes to the queue.
 			processNodeSubstitutions(from, minimumCostPath, mappedFromNodes, mappedToNodes, 
-					unmappedToNodes, nextFromNode, costContainer, open);
+					unmappedToNodes, nextFromNode, costContainer, queue);
 			
 			// Add deletion of this node to the queue.
-			processNodeDeletion(from, to, nextFromNode, minimumCostPath, costContainer, open);
+			processNodeDeletion(from, to, nextFromNode, minimumCostPath, costContainer, queue);
 		} else {
 			// Add insertions of all remaining destination nodes to the queue.
-			processNodeInsertions(from, minimumCostPath, unmappedToNodes, costContainer, open);
+			processNodeInsertions(from, minimumCostPath, unmappedToNodes, costContainer, queue);
 		}
 	}
 
@@ -148,7 +148,7 @@ public class EditPathFinder {
 			Collection<DecoratedNode> mappedToNodes, 
 			Collection<DecoratedNode> unmappedToNodes, 
 			DecoratedNode fromNode, CostContainer costContainer, 
-			Queue<EditPath> open) {
+			Queue<EditPath> queue) {
 		
 		for(DecoratedNode unmappedToNode : unmappedToNodes) {
 			// Create a copy of edit path.
@@ -235,14 +235,14 @@ public class EditPathFinder {
 			}
 							
 			substitutionEditPath.addNodeEditPath(substitutionNodeEditPath);
-			open.offer(substitutionEditPath);
+			queue.offer(substitutionEditPath);
 		}
 	}
 
 	
 	private static void processNodeDeletion(DecoratedGraph from, DecoratedGraph to, 
 			DecoratedNode node, EditPath editPath,
-			CostContainer costContainer, Queue<EditPath> open) {
+			CostContainer costContainer, Queue<EditPath> queue) {
 		
 		// Create a copy of edit path.
 		EditPath deletionEditPath = editPath.copy();
@@ -270,13 +270,13 @@ public class EditPathFinder {
 		}
 		
 		deletionEditPath.addNodeEditPath(deletionNodeEditPath);
-		open.offer(deletionEditPath);
+		queue.offer(deletionEditPath);
 	}
 	
 	
 	private static void processNodeInsertions(DecoratedGraph from, EditPath editPath,
 			Collection<DecoratedNode> unmappedToNodes, CostContainer costContainer, 
-			Queue<EditPath> open) {
+			Queue<EditPath> queue) {
 		
 		// Create a copy of edit path.
 		EditPath insertionPath = editPath.copy();
@@ -309,7 +309,7 @@ public class EditPathFinder {
 		}
 		
 		insertionPath.setComplete(true);
-		open.offer(insertionPath);
+		queue.offer(insertionPath);
 	}
 
 }
