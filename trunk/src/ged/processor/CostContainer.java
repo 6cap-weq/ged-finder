@@ -1,4 +1,4 @@
-package ged.editpath.editoperation;
+package ged.processor;
 
 import java.math.BigDecimal;
 

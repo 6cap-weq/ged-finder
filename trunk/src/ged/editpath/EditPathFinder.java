@@ -1,6 +1,5 @@
 package ged.editpath;
 
-import ged.editpath.editoperation.CostContainer;
 import ged.editpath.editoperation.EdgeDeletion;
 import ged.editpath.editoperation.EdgeInsertion;
 import ged.editpath.editoperation.EditOperation;
@@ -9,6 +8,7 @@ import ged.editpath.editoperation.NodeInsertion;
 import ged.editpath.editoperation.NodeSubstitution;
 import ged.graph.DecoratedGraph;
 import ged.graph.DecoratedNode;
+import ged.processor.CostContainer;
 
 import java.util.ArrayList;
 import java.util.Collection;
