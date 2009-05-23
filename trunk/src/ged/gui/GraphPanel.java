@@ -12,7 +12,7 @@ import att.grappa.GrappaPanel;
 /**
  * Component for displaying the combined result graph visually.
  * 
- * Delegates to {@link GrappaPanel} to create the graphical
+ * Delegates to Grappa's {@link GrappaPanel} to create the graphical
  * representation.
  * 
  * @author Roman Tekhov
