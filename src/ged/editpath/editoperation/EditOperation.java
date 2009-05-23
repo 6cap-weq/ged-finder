@@ -1,5 +1,7 @@
 package ged.editpath.editoperation;
 
+import ged.processor.CostContainer;
+
 import java.math.BigDecimal;
 
 /**

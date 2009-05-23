@@ -1,6 +1,7 @@
 package ged.editpath.editoperation;
 
 import ged.graph.DecoratedNode;
+import ged.processor.CostContainer;
 import ged.processor.StringEditDistance;
 
 import java.math.BigDecimal;

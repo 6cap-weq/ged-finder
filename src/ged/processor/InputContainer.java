@@ -1,6 +1,5 @@
 package ged.processor;
 
-import ged.editpath.editoperation.CostContainer;
 
 /**
  * Input data container.
