@@ -79,7 +79,7 @@ class CostPanel extends JPanel {
 	
 	
 	private JFormattedTextField initTextField(String label, Double initialValue) {
-		JFormattedTextField field = new JFormattedTextField(new NullSupportingNumberFormat());
+		JFormattedTextField field = new JFormattedTextField(new CostNumberFormat());
 		
 		field.setValue(initialValue);
 		field.setColumns(5);
@@ -96,9 +96,16 @@ class CostPanel extends JPanel {
 	}
 	
 	
-	private static class NullSupportingNumberFormat extends NumberFormatter {
+	private static class CostNumberFormat extends NumberFormatter {
 
 		private static final long serialVersionUID = 1L;
+		
+		
+		private CostNumberFormat() {
+			setValueClass(Double.class);
+			setMinimum(0D);
+		}
+		
 
 		@Override
 		public Object stringToValue(String text) throws ParseException {
